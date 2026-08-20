@@ -292,7 +292,7 @@ function renderCourseList(containerId, mode, query) {
   }
   container.innerHTML = filtered.map(c => {
     const sub = c.subtitle ? `<div class="course-sub">${c.subtitle}</div>` : "";
-    const badge = c.dualBranch ? '<span class="course-badge">2 filial</span>' : "";
+    const badge = (c.dualBranch && mode === 'messages') ? '<span class="course-badge">2 filial</span>' : '';
     return `<div class="course-item" onclick="selectCourse(${c.id},'${mode}')" tabindex="0" role="button" aria-label="${c.name}">
       <div class="course-num">${c.id}</div>
       <div class="course-info">
@@ -324,7 +324,7 @@ function renderModalBody(mode) {
   if (!c) return;
 
   let branchHtml = "";
-  if (c.dualBranch) {
+  if (c.dualBranch && mode === "messages") {
     branchHtml = `<div class="branch-selector">
       <button class="branch-btn ${selectedBranch==='elmler'?'active':''}" onclick="setBranch('elmler','${mode}')">Elmlər</button>
       <button class="branch-btn ${selectedBranch==='ramana'?'active':''}" onclick="setBranch('ramana','${mode}')">Ramana</button>
