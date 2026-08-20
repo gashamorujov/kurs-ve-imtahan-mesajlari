@@ -7,128 +7,161 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --primary:#1a365d;--primary-light:#2b4c7e;--primary-lighter:#3a6bb5;
-  --accent:#e8a838;--accent-hover:#d4952e;
-  --bg:#f0f2f5;--card:#fff;--text:#1a202c;--text-secondary:#4a5568;
-  --border:#e2e8f0;--success:#38a169;--success-bg:#f0fff4;
-  --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
-  --shadow-md:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.06);
-  --shadow-lg:0 10px 25px rgba(0,0,0,.1);
-  --radius:12px;--radius-sm:8px;
-  --nav-height:64px;--bottom-nav-height:64px;
+  --primary:#0f172a;--primary-mid:#1e293b;--primary-light:#334155;
+  --accent:#2563eb;--accent-hover:#1d4ed8;--accent-soft:#eff6ff;
+  --bg:#f8fafc;--card:#ffffff;--text:#0f172a;--text-sec:#64748b;
+  --border:#e2e8f0;--border-focus:#2563eb;
+  --success:#16a34a;--success-bg:#f0fdf4;
+  --shadow-xs:0 1px 2px rgba(0,0,0,.04);
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg:0 20px 60px rgba(0,0,0,.15);
+  --radius:14px;--radius-sm:10px;--radius-xs:8px;
+  --header-h:60px;
 }
 html{font-size:16px;-webkit-text-size-adjust:100%}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
-/* Top Header */
-.top-header{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-.top-header h1{font-size:1.15rem;font-weight:700;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Header */
+.header{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(226,232,240,.6);padding:0 20px}
+.header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:var(--header-h)}
+.logo{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:800;color:var(--primary);letter-spacing:-.02em}
+.logo-mark{width:32px;height:32px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.85rem;font-weight:800}
 
-/* Main content area */
-.main{padding-top:var(--nav-height);padding-bottom:calc(var(--bottom-nav-height) + 16px);min-height:100vh}
+/* Tabs */
+.tab-bar{display:flex;background:#f1f5f9;border-radius:var(--radius-sm);padding:4px;gap:2px}
+.tab-btn{flex:1;padding:10px 20px;border:none;background:transparent;border-radius:var(--radius-xs);font-size:.88rem;font-weight:600;color:var(--text-sec);cursor:pointer;transition:all .25s ease;white-space:nowrap;position:relative}
+.tab-btn.active{background:var(--card);color:var(--primary);box-shadow:var(--shadow);font-weight:700}
+.tab-btn:not(.active):hover{color:var(--text);background:rgba(255,255,255,.5)}
+.tab-shortcut{font-size:.65rem;font-weight:500;color:var(--text-sec);opacity:.5;margin-left:4px;vertical-align:middle}
+
+/* Main */
+.main{max-width:960px;margin:0 auto;padding:20px 20px 40px;min-height:calc(100vh - var(--header-h))}
 
 /* Sections */
-.section{display:none;padding:16px}
+.section{display:none;animation:fadeUp .3s ease}
 .section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* Search */
-.search-wrap{position:sticky;top:var(--nav-height);z-index:50;background:var(--bg);padding:12px 0 8px}
+.search-wrap{margin-bottom:16px}
 .search-box{position:relative}
-.search-box input{width:100%;padding:12px 16px 12px 44px;border:2px solid var(--border);border-radius:var(--radius);font-size:1rem;background:var(--card);color:var(--text);outline:none;transition:border-color .2s}
-.search-box input:focus{border-color:var(--primary-lighter)}
-.search-box input::placeholder{color:#a0aec0}
-.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#a0aec0;pointer-events:none}
+.search-box input{width:100%;padding:13px 16px 13px 44px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.95rem;background:var(--card);color:var(--text);outline:none;transition:all .2s;font-weight:500}
+.search-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.search-box input::placeholder{color:#94a3b8;font-weight:400}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#94a3b8;pointer-events:none}
 
-/* Course cards */
-.card-grid{display:grid;gap:12px;margin-top:8px}
-.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:box-shadow .2s,transform .15s;cursor:pointer;border:2px solid transparent}
-.card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px)}
-.card:active{transform:scale(.985)}
-.card-inner{padding:16px}
-.card-number{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;margin-right:10px;flex-shrink:0}
-.card-header{display:flex;align-items:flex-start}
-.card-title{font-size:.95rem;font-weight:600;color:var(--text);line-height:1.4;flex:1}
-.card-subtitle{font-size:.8rem;color:var(--text-secondary);margin-top:4px;padding-left:38px}
-.card-badge{display:inline-block;margin-top:8px;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:600;background:#ebf4ff;color:var(--primary-lighter);margin-left:38px}
+/* Course list */
+.course-list{display:flex;flex-direction:column;gap:6px}
+.course-item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s ease;position:relative}
+.course-item:hover{border-color:var(--accent);box-shadow:var(--shadow);transform:translateY(-1px)}
+.course-item:active{transform:scale(.995)}
+.course-num{display:flex;align-items:center;justify-content:center;min-width:32px;height:32px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:.78rem;font-weight:800;flex-shrink:0}
+.course-item:hover .course-num{background:var(--accent);color:#fff}
+.course-info{flex:1;min-width:0}
+.course-name{font-size:.9rem;font-weight:600;color:var(--text);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.course-sub{font-size:.75rem;color:var(--text-sec);margin-top:2px;font-weight:500}
+.course-arrow{color:#cbd5e0;flex-shrink:0;transition:color .2s,transform .2s}
+.course-item:hover .course-arrow{color:var(--accent);transform:translateX(2px)}
+.course-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:.68rem;font-weight:700;background:#fef3c7;color:#b45309;margin-top:4px;width:fit-content}
+.course-item:hover .course-badge{background:#fde68a}
 
-/* Message preview area */
-.msg-area{margin-top:16px}
-.msg-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-md);overflow:hidden;animation:slideUp .3s ease}
-@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.msg-header{padding:16px 16px 0;display:flex;align-items:center;gap:8px}
-.msg-header-back{background:none;border:none;color:var(--primary);font-size:1.4rem;cursor:pointer;padding:4px;line-height:1}
-.msg-header-title{font-size:1rem;font-weight:700;color:var(--primary)}
-.msg-body{padding:16px}
-.msg-inputs{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
-.msg-inputs label{font-size:.8rem;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.03em}
-.msg-inputs input,.msg-inputs select{padding:11px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:1rem;background:#fff;color:var(--text);outline:none;transition:border-color .2s;width:100%}
-.msg-inputs input:focus,.msg-inputs select:focus{border-color:var(--primary-lighter)}
-.msg-input-row{display:flex;gap:10px}
-.msg-input-row>div{flex:1}
+/* Empty state */
+.empty-state{text-align:center;padding:48px 20px;color:var(--text-sec)}
+.empty-state svg{margin-bottom:12px;opacity:.3}
+.empty-state p{font-size:.95rem;font-weight:500}
 
-/* Branch selector */
-.branch-selector{display:flex;gap:8px;margin-bottom:14px}
-.branch-btn{flex:1;padding:10px;border:2px solid var(--border);border-radius:var(--radius-sm);background:#fff;font-size:.9rem;font-weight:600;cursor:pointer;text-align:center;transition:all .2s;color:var(--text)}
-.branch-btn.active{border-color:var(--primary);background:var(--primary);color:#fff}
-.branch-btn:not(.active):hover{border-color:var(--primary-lighter)}
+/* Modal overlay */
+.modal-overlay{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s ease}
+.modal-overlay.open{opacity:1;visibility:visible}
+.modal-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.modal{position:relative;z-index:1;width:100%;max-width:560px;max-height:90vh;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-lg);overflow:hidden;display:flex;flex-direction:column;transform:scale(.95) translateY(10px);transition:transform .25s ease}
+.modal-overlay.open .modal{transform:scale(1) translateY(0)}
+.modal-head{padding:20px 24px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.modal-head-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.modal-title{font-size:1rem;font-weight:700;color:var(--primary);line-height:1.4;flex:1}
+.modal-close{width:36px;height:36px;border-radius:var(--radius-xs);border:1.5px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-sec);transition:all .2s;flex-shrink:0}
+.modal-close:hover{background:#f1f5f9;color:var(--text);border-color:#cbd5e0}
+.modal-body{padding:20px 24px;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch}
+
+/* Branch selector in modal */
+.branch-selector{display:flex;gap:8px;margin-bottom:16px}
+.branch-btn{flex:1;padding:11px;border:1.5px solid var(--border);border-radius:var(--radius-xs);background:var(--card);font-size:.88rem;font-weight:600;cursor:pointer;text-align:center;transition:all .2s;color:var(--text-sec)}
+.branch-btn.active{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.branch-btn:not(.active):hover{border-color:#94a3b8;color:var(--text)}
+
+/* Inputs in modal */
+.modal-inputs{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.modal-inputs label{font-size:.75rem;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:.04em}
+.modal-inputs input{padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-xs);font-size:.95rem;background:var(--card);color:var(--text);outline:none;transition:all .2s;width:100%;font-weight:500}
+.modal-inputs input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.modal-input-row{display:flex;gap:12px}
+.modal-input-row>div{flex:1}
 
 /* Message preview */
-.msg-preview{background:#f7fafc;border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-size:.92rem;line-height:1.7;white-space:pre-wrap;word-break:break-word;color:var(--text);min-height:80px;margin-bottom:14px;font-family:inherit}
+.msg-preview{background:#f8fafc;border:1.5px solid var(--border);border-radius:var(--radius-xs);padding:16px;font-size:.9rem;line-height:1.75;white-space:pre-wrap;word-break:break-word;color:var(--text);min-height:80px;font-family:inherit}
 
-/* Buttons */
-.btn-row{display:flex;gap:10px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;border:none;border-radius:var(--radius-sm);font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;flex:1;min-width:140px}
+/* Edit textarea */
+.msg-edit-area{width:100%;min-height:160px;padding:14px;border:1.5px solid var(--accent);border-radius:var(--radius-xs);font-size:.9rem;line-height:1.75;resize:vertical;font-family:inherit;color:var(--text);outline:none;background:var(--card)}
+.msg-edit-area:focus{box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+
+/* Modal footer buttons */
+.modal-footer{padding:16px 24px 20px;border-top:1px solid var(--border);display:flex;gap:10px;flex-shrink:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border:none;border-radius:var(--radius-xs);font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;flex:1}
 .btn-copy{background:var(--accent);color:#fff}
-.btn-copy:hover{background:var(--accent-hover)}
+.btn-copy:hover{background:var(--accent-hover);box-shadow:0 4px 12px rgba(37,99,235,.3)}
 .btn-copy:active{transform:scale(.97)}
-.btn-edit{background:#edf2f7;color:var(--text)}
+.btn-edit{background:#f1f5f9;color:var(--text)}
 .btn-edit:hover{background:#e2e8f0}
 .btn-edit:active{transform:scale(.97)}
 
 /* Toast */
-.toast{position:fixed;bottom:calc(var(--bottom-nav-height) + 24px);left:50%;transform:translateX(-50%) translateY(80px);background:var(--success);color:#fff;padding:12px 24px;border-radius:var(--radius);font-weight:700;font-size:.95rem;box-shadow:var(--shadow-lg);z-index:200;transition:transform .3s ease,opacity .3s ease;opacity:0;pointer-events:none;white-space:nowrap}
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--primary);color:#fff;padding:12px 24px;border-radius:var(--radius-sm);font-weight:700;font-size:.9rem;box-shadow:var(--shadow-lg);z-index:300;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s ease;opacity:0;pointer-events:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast-icon{width:20px;height:20px;border-radius:50%;background:var(--success);display:flex;align-items:center;justify-content:center}
 
-/* Editable textarea */
-.msg-edit-area{width:100%;min-height:140px;padding:12px;border:2px solid var(--primary-lighter);border-radius:var(--radius-sm);font-size:.92rem;line-height:1.7;resize:vertical;font-family:inherit;color:var(--text);outline:none;margin-bottom:14px;background:#fff}
-.msg-edit-area:focus{border-color:var(--primary)}
-
-/* Bottom nav */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--bottom-nav-height);background:var(--card);display:flex;border-top:1px solid var(--border);z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,.06)}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:none;cursor:pointer;color:var(--text-secondary);font-size:.65rem;font-weight:600;transition:color .2s;padding:0}
-.nav-item.active{color:var(--primary)}
-.nav-icon{line-height:1}
-
-/* Desktop */
+/* Desktop tweaks */
 @media(min-width:768px){
-  .main{max-width:720px;margin:0 auto;padding-left:20px;padding-right:20px}
-  .card-grid{grid-template-columns:1fr 1fr}
-  .top-header h1{font-size:1.3rem}
-  .msg-area{max-width:720px}
-  .bottom-nav{max-width:720px;left:50%;transform:translateX(-50%);border-radius:var(--radius) var(--radius) 0 0;border:1px solid var(--border);border-bottom:none}
+  .course-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .header{padding:0 32px}
+  .main{padding:24px 32px 48px}
+  .tab-btn{padding:10px 28px}
+  .modal{max-width:600px}
 }
 @media(min-width:1024px){
-  .main{max-width:860px}
-  .card-grid{grid-template-columns:1fr 1fr 1fr}
-  .bottom-nav{max-width:860px}
+  .course-list{grid-template-columns:1fr 1fr 1fr}
 }
 
 /* Scrollbar */
-::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-thumb{background:#cbd5e0;border-radius:3px}
+::-webkit-scrollbar-track{background:transparent}
 
-/* Empty state */
-.empty-state{text-align:center;padding:40px 20px;color:var(--text-secondary)}
-.empty-state .icon{font-size:2.5rem;margin-bottom:8px}
-.empty-state p{font-size:.95rem}
+/* Focus visible for accessibility */
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 </head>
 <body>
 
-<div class="top-header">
-  <h1 id="headerTitle">Kurs və İmtahan Mesajları</h1>
-</div>
+<!-- Header with tabs -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-mark">K</div>
+      <span>Mesajlar</span>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tabMsg" onclick="switchTab('messages')">
+        Mesajlar<span class="tab-shortcut">Ctrl+Space</span>
+      </button>
+      <button class="tab-btn" id="tabExam" onclick="switchTab('exams')">
+        İmtahanlar
+      </button>
+    </div>
+  </div>
+</header>
 
+<!-- Main content -->
 <div class="main">
   <!-- MESAJLAR -->
   <div class="section active" id="sectionMessages">
@@ -138,8 +171,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
         <input type="text" id="searchMessages" placeholder="Kurs axtar..." autocomplete="off">
       </div>
     </div>
-    <div class="card-grid" id="msgList"></div>
-    <div class="msg-area" id="msgArea" style="display:none"></div>
+    <div class="course-list" id="msgList"></div>
   </div>
 
   <!-- İMTAHANLAR -->
@@ -150,25 +182,35 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
         <input type="text" id="searchExams" placeholder="Kurs axtar..." autocomplete="off">
       </div>
     </div>
-    <div class="card-grid" id="examList"></div>
-    <div class="msg-area" id="examArea" style="display:none"></div>
+    <div class="course-list" id="examList"></div>
   </div>
 </div>
 
-<!-- Bottom Navigation -->
-<nav class="bottom-nav">
-  <button class="nav-item active" onclick="switchTab('messages')">
-    <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    <span>Mesajlar</span>
-  </button>
-  <button class="nav-item" onclick="switchTab('exams')">
-    <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-    <span>İmtahanlar</span>
-  </button>
-</nav>
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-backdrop" onclick="closeModal()"></div>
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <div class="modal-head-top">
+        <span class="modal-title" id="modalTitle"></span>
+        <button class="modal-close" onclick="closeModal()" aria-label="Bağla">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter">
+      <button class="btn btn-copy" onclick="copyMessage()">KOPYALA</button>
+      <button class="btn btn-edit" id="btnEdit" onclick="toggleEdit()">DÜZƏLİŞ ET</button>
+    </div>
+  </div>
+</div>
 
 <!-- Toast -->
-<div class="toast" id="toast">Mesaj kopyalandı</div>
+<div class="toast" id="toast">
+  <span class="toast-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+  Mesaj kopyalandı
+</div>
 
 <script>
 const COURSES = [
@@ -218,36 +260,25 @@ let selectedBranch = "elmler";
 let isEditing = false;
 let editContent = "";
 
+/* --- Tab switching --- */
 function switchTab(tab) {
   currentTab = tab;
   document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-  document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
   if (tab === "messages") {
     document.getElementById("sectionMessages").classList.add("active");
-    document.querySelectorAll(".nav-item")[0].classList.add("active");
-    document.getElementById("headerTitle").textContent = "Mesajlar";
-    hideMsgArea("msgArea");
+    document.getElementById("tabMsg").classList.add("active");
     document.getElementById("searchMessages").value = "";
     renderCourseList("msgList", "messages", "");
   } else {
     document.getElementById("sectionExams").classList.add("active");
-    document.querySelectorAll(".nav-item")[1].classList.add("active");
-    document.getElementById("headerTitle").textContent = "İmtahanlar";
-    hideMsgArea("examArea");
+    document.getElementById("tabExam").classList.add("active");
     document.getElementById("searchExams").value = "";
     renderCourseList("examList", "exams", "");
   }
 }
 
-function hideMsgArea(areaId) {
-  const area = document.getElementById(areaId);
-  area.style.display = "none";
-  area.innerHTML = "";
-  selectedCourse = null;
-  isEditing = false;
-  editContent = "";
-}
-
+/* --- Course list rendering --- */
 function renderCourseList(containerId, mode, query) {
   const container = document.getElementById(containerId);
   const q = query.toLowerCase().trim();
@@ -259,39 +290,40 @@ function renderCourseList(containerId, mode, query) {
     );
   }
   if (filtered.length === 0) {
-    container.innerHTML = '<div class="empty-state"><div class="icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div><p>Nəticə tapılmadı</p></div>';
+    container.innerHTML = '<div class="empty-state"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg><p>Nəticə tapılmadı</p></div>';
     return;
   }
   container.innerHTML = filtered.map(c => {
-    const subtitle = c.subtitle ? `<div class="card-subtitle">${c.subtitle}</div>` : "";
-    const badge = c.dualBranch ? `<div class="card-badge">2 filial</div>` : "";
-    return `<div class="card" onclick="selectCourse(${c.id},'${mode}')">
-      <div class="card-inner">
-        <div class="card-header">
-          <span class="card-number">${c.id}</span>
-          <span class="card-title">${c.name}</span>
-        </div>
-        ${subtitle}${badge}
+    const sub = c.subtitle ? `<div class="course-sub">${c.subtitle}</div>` : "";
+    const badge = c.dualBranch ? '<span class="course-badge">2 filial</span>' : "";
+    return `<div class="course-item" onclick="selectCourse(${c.id},'${mode}')" tabindex="0" role="button" aria-label="${c.name}">
+      <div class="course-num">${c.id}</div>
+      <div class="course-info">
+        <div class="course-name">${c.name}</div>
+        ${sub}${badge}
       </div>
+      <svg class="course-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
     </div>`;
   }).join("");
 }
 
+/* --- Select course & open modal --- */
 function selectCourse(id, mode) {
   selectedCourse = COURSES.find(c => c.id === id);
   selectedBranch = "elmler";
   isEditing = false;
   editContent = "";
-  const areaId = mode === "messages" ? "msgArea" : "examArea";
-  const area = document.getElementById(areaId);
-  area.style.display = "block";
-  renderMsgPreview(areaId, mode);
-  area.scrollIntoView({behavior:"smooth", block:"start"});
+  document.getElementById("modalTitle").textContent = selectedCourse.name;
+  renderModalBody(mode);
+  document.getElementById("modalOverlay").classList.add("open");
+  document.body.style.overflow = "hidden";
 }
 
-function renderMsgPreview(areaId, mode) {
-  const area = document.getElementById(areaId);
+/* --- Modal body rendering --- */
+function renderModalBody(mode) {
   const c = selectedCourse;
+  const body = document.getElementById("modalBody");
+  const footer = document.getElementById("modalFooter");
   if (!c) return;
 
   let branchHtml = "";
@@ -304,43 +336,29 @@ function renderMsgPreview(areaId, mode) {
 
   let inputsHtml = "";
   if (mode === "messages") {
-    inputsHtml = `<div class="msg-inputs">
-      <div><label>Tarix</label><input type="text" id="msgDate" placeholder="21.08.2026" oninput="updatePreview('${areaId}','${mode}')"></div>
+    inputsHtml = `<div class="modal-inputs">
+      <div><label>Tarix</label><input type="text" id="msgDate" placeholder="21.08.2026" oninput="updatePreview('${mode}')"></div>
     </div>`;
   } else {
-    inputsHtml = `<div class="msg-inputs">
-      <div class="msg-input-row">
-        <div><label>Tarix</label><input type="text" id="examDate" placeholder="21.08.2026" oninput="updatePreview('${areaId}','${mode}')"></div>
-        <div><label>Saat</label><input type="text" id="examTime" placeholder="11:30" oninput="updatePreview('${areaId}','${mode}')"></div>
+    inputsHtml = `<div class="modal-inputs">
+      <div class="modal-input-row">
+        <div><label>Tarix</label><input type="text" id="examDate" placeholder="21.08.2026" oninput="updatePreview('${mode}')"></div>
+        <div><label>Saat</label><input type="text" id="examTime" placeholder="11:30" oninput="updatePreview('${mode}')"></div>
       </div>
     </div>`;
   }
 
-  const message = generateMessage(mode);
   const previewContent = isEditing
-    ? `<textarea class="msg-edit-area" id="editArea" oninput="editContent=this.value">${editContent}</textarea>`
-    : `<div class="msg-preview" id="msgPreview">${escapeHtml(message)}</div>`;
+    ? `<textarea class="msg-edit-area" id="editArea" oninput="editContent=this.value">${escapeHtml(editContent)}</textarea>`
+    : `<div class="msg-preview" id="msgPreview">${escapeHtml(generateMessage(mode))}</div>`;
 
-  const editBtnLabel = isEditing ? "HAZIRDIR" : "DÜZƏLİŞ ET";
+  body.innerHTML = branchHtml + inputsHtml + previewContent;
 
-  area.innerHTML = `
-    <div class="msg-card">
-      <div class="msg-header">
-        <button class="msg-header-back" onclick="hideMsgArea('${areaId}')">&larr;</button>
-        <span class="msg-header-title">${c.name}</span>
-      </div>
-      <div class="msg-body">
-        ${branchHtml}
-        ${inputsHtml}
-        ${previewContent}
-        <div class="btn-row">
-          <button class="btn btn-copy" onclick="copyMessage('${mode}')">KOPYALA</button>
-          <button class="btn btn-edit" onclick="toggleEdit('${areaId}','${mode}')">${editBtnLabel}</button>
-        </div>
-      </div>
-    </div>`;
+  const editBtn = document.getElementById("btnEdit");
+  editBtn.textContent = isEditing ? "HAZIRDIR" : "DÜZƏLİŞ ET";
 }
 
+/* --- Message generation --- */
 function generateMessage(mode) {
   const c = selectedCourse;
   const branch = BRANCHES[selectedBranch];
@@ -357,38 +375,45 @@ function generateMessage(mode) {
   }
 }
 
-function updatePreview(areaId, mode) {
+function updatePreview(mode) {
   if (isEditing) return;
   const preview = document.getElementById("msgPreview");
-  if (preview) {
-    preview.textContent = generateMessage(mode);
-  }
+  if (preview) preview.textContent = generateMessage(mode);
 }
 
 function setBranch(branch, mode) {
   selectedBranch = branch;
-  const areaId = mode === "messages" ? "msgArea" : "examArea";
-  renderMsgPreview(areaId, mode);
+  renderModalBody(mode);
 }
 
-function toggleEdit(areaId, mode) {
+/* --- Edit toggle --- */
+function toggleEdit() {
+  isEditing = !isEditing;
   if (isEditing) {
-    isEditing = false;
-    editContent = "";
+    editContent = generateMessage(currentTab === "messages" ? "messages" : "exams");
   } else {
-    isEditing = true;
-    editContent = generateMessage(mode);
+    editContent = "";
   }
-  renderMsgPreview(areaId, mode);
+  renderModalBody(currentTab === "messages" ? "messages" : "exams");
 }
 
-function getMessage(mode) {
+/* --- Close modal --- */
+function closeModal() {
+  document.getElementById("modalOverlay").classList.remove("open");
+  document.body.style.overflow = "";
+  selectedCourse = null;
+  isEditing = false;
+  editContent = "";
+}
+
+/* --- Copy --- */
+function getMessage() {
   if (isEditing) return editContent;
-  return generateMessage(mode);
+  return generateMessage(currentTab === "messages" ? "messages" : "exams");
 }
 
-function copyMessage(mode) {
-  const text = getMessage(mode);
+function copyMessage() {
+  const text = getMessage();
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(() => showToast()).catch(() => fallbackCopy(text));
   } else {
@@ -403,15 +428,12 @@ function fallbackCopy(text) {
   ta.style.left = "-9999px";
   document.body.appendChild(ta);
   ta.select();
-  try {
-    document.execCommand("copy");
-    showToast();
-  } catch(e) {
-    alert("Kopyalama uğursuz oldu. Zəhmət olmasa mesajı əl ilə seçib kopyalayın.");
-  }
+  try { document.execCommand("copy"); showToast(); }
+  catch(e) { alert("Kopyalama uğursuz oldu."); }
   document.body.removeChild(ta);
 }
 
+/* --- Toast --- */
 function showToast() {
   const t = document.getElementById("toast");
   t.classList.add("show");
@@ -419,21 +441,37 @@ function showToast() {
   t._timer = setTimeout(() => t.classList.remove("show"), 2500);
 }
 
+/* --- Helpers --- */
 function escapeHtml(str) {
   return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
 
-// Search handlers
+/* --- Keyboard shortcuts --- */
+document.addEventListener("keydown", function(e) {
+  /* ESC closes modal */
+  if (e.key === "Escape") {
+    const overlay = document.getElementById("modalOverlay");
+    if (overlay.classList.contains("open")) {
+      closeModal();
+      e.preventDefault();
+    }
+  }
+  /* Ctrl+Space toggles tab */
+  if (e.ctrlKey && e.code === "Space") {
+    e.preventDefault();
+    switchTab(currentTab === "messages" ? "exams" : "messages");
+  }
+});
+
+/* --- Search handlers --- */
 document.getElementById("searchMessages").addEventListener("input", function() {
-  if (selectedCourse) hideMsgArea("msgArea");
   renderCourseList("msgList", "messages", this.value);
 });
 document.getElementById("searchExams").addEventListener("input", function() {
-  if (selectedCourse) hideMsgArea("examArea");
   renderCourseList("examList", "exams", this.value);
 });
 
-// Init
+/* --- Init --- */
 renderCourseList("msgList", "messages", "");
 renderCourseList("examList", "exams", "");
 </script>
