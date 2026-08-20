@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Kurs və İmtahan Mesajları</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#1a365d;--primary-light:#2b4c7e;--primary-lighter:#3a6bb5;
+  --accent:#e8a838;--accent-hover:#d4952e;
+  --bg:#f0f2f5;--card:#fff;--text:#1a202c;--text-secondary:#4a5568;
+  --border:#e2e8f0;--success:#38a169;--success-bg:#f0fff4;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.06);
+  --shadow-lg:0 10px 25px rgba(0,0,0,.1);
+  --radius:12px;--radius-sm:8px;
+  --nav-height:64px;--bottom-nav-height:64px;
+}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden}
+
+/* Top Header */
+.top-header{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.top-header h1{font-size:1.15rem;font-weight:700;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Main content area */
+.main{padding-top:var(--nav-height);padding-bottom:calc(var(--bottom-nav-height) + 16px);min-height:100vh}
+
+/* Sections */
+.section{display:none;padding:16px}
+.section.active{display:block}
+
+/* Search */
+.search-wrap{position:sticky;top:var(--nav-height);z-index:50;background:var(--bg);padding:12px 0 8px}
+.search-box{position:relative}
+.search-box input{width:100%;padding:12px 16px 12px 44px;border:2px solid var(--border);border-radius:var(--radius);font-size:1rem;background:var(--card);color:var(--text);outline:none;transition:border-color .2s}
+.search-box input:focus{border-color:var(--primary-lighter)}
+.search-box input::placeholder{color:#a0aec0}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#a0aec0;pointer-events:none}
+
+/* Course cards */
+.card-grid{display:grid;gap:12px;margin-top:8px}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:box-shadow .2s,transform .15s;cursor:pointer;border:2px solid transparent}
+.card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.card:active{transform:scale(.985)}
+.card-inner{padding:16px}
+.card-number{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--primary);color:#fff;font-size:.75rem;font-weight:700;margin-right:10px;flex-shrink:0}
+.card-header{display:flex;align-items:flex-start}
+.card-title{font-size:.95rem;font-weight:600;color:var(--text);line-height:1.4;flex:1}
+.card-subtitle{font-size:.8rem;color:var(--text-secondary);margin-top:4px;padding-left:38px}
+.card-badge{display:inline-block;margin-top:8px;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:600;background:#ebf4ff;color:var(--primary-lighter);margin-left:38px}
+
+/* Message preview area */
+.msg-area{margin-top:16px}
+.msg-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-md);overflow:hidden;animation:slideUp .3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.msg-header{padding:16px 16px 0;display:flex;align-items:center;gap:8px}
+.msg-header-back{background:none;border:none;color:var(--primary);font-size:1.4rem;cursor:pointer;padding:4px;line-height:1}
+.msg-header-title{font-size:1rem;font-weight:700;color:var(--primary)}
+.msg-body{padding:16px}
+.msg-inputs{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.msg-inputs label{font-size:.8rem;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.03em}
+.msg-inputs input,.msg-inputs select{padding:11px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:1rem;background:#fff;color:var(--text);outline:none;transition:border-color .2s;width:100%}
+.msg-inputs input:focus,.msg-inputs select:focus{border-color:var(--primary-lighter)}
+.msg-input-row{display:flex;gap:10px}
+.msg-input-row>div{flex:1}
+
+/* Branch selector */
+.branch-selector{display:flex;gap:8px;margin-bottom:14px}
+.branch-btn{flex:1;padding:10px;border:2px solid var(--border);border-radius:var(--radius-sm);background:#fff;font-size:.9rem;font-weight:600;cursor:pointer;text-align:center;transition:all .2s;color:var(--text)}
+.branch-btn.active{border-color:var(--primary);background:var(--primary);color:#fff}
+.branch-btn:not(.active):hover{border-color:var(--primary-lighter)}
+
+/* Message preview */
+.msg-preview{background:#f7fafc;border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-size:.92rem;line-height:1.7;white-space:pre-wrap;word-break:break-word;color:var(--text);min-height:80px;margin-bottom:14px;font-family:inherit}
+
+/* Buttons */
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;border:none;border-radius:var(--radius-sm);font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;flex:1;min-width:140px}
+.btn-copy{background:var(--accent);color:#fff}
+.btn-copy:hover{background:var(--accent-hover)}
+.btn-copy:active{transform:scale(.97)}
+.btn-edit{background:#edf2f7;color:var(--text)}
+.btn-edit:hover{background:#e2e8f0}
+.btn-edit:active{transform:scale(.97)}
+
+/* Toast */
+.toast{position:fixed;bottom:calc(var(--bottom-nav-height) + 24px);left:50%;transform:translateX(-50%) translateY(80px);background:var(--success);color:#fff;padding:12px 24px;border-radius:var(--radius);font-weight:700;font-size:.95rem;box-shadow:var(--shadow-lg);z-index:200;transition:transform .3s ease,opacity .3s ease;opacity:0;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* Editable textarea */
+.msg-edit-area{width:100%;min-height:140px;padding:12px;border:2px solid var(--primary-lighter);border-radius:var(--radius-sm);font-size:.92rem;line-height:1.7;resize:vertical;font-family:inherit;color:var(--text);outline:none;margin-bottom:14px;background:#fff}
+.msg-edit-area:focus{border-color:var(--primary)}
+
+/* Bottom nav */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--bottom-nav-height);background:var(--card);display:flex;border-top:1px solid var(--border);z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,.06)}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:none;cursor:pointer;color:var(--text-secondary);font-size:.65rem;font-weight:600;transition:color .2s;padding:0}
+.nav-item.active{color:var(--primary)}
+.nav-icon{line-height:1}
+
+/* Desktop */
+@media(min-width:768px){
+  .main{max-width:720px;margin:0 auto;padding-left:20px;padding-right:20px}
+  .card-grid{grid-template-columns:1fr 1fr}
+  .top-header h1{font-size:1.3rem}
+  .msg-area{max-width:720px}
+  .bottom-nav{max-width:720px;left:50%;transform:translateX(-50%);border-radius:var(--radius) var(--radius) 0 0;border:1px solid var(--border);border-bottom:none}
+}
+@media(min-width:1024px){
+  .main{max-width:860px}
+  .card-grid{grid-template-columns:1fr 1fr 1fr}
+  .bottom-nav{max-width:860px}
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-thumb{background:#cbd5e0;border-radius:3px}
+
+/* Empty state */
+.empty-state{text-align:center;padding:40px 20px;color:var(--text-secondary)}
+.empty-state .icon{font-size:2.5rem;margin-bottom:8px}
+.empty-state p{font-size:.95rem}
+</style>
+</head>
+<body>
+
+<div class="top-header">
+  <h1 id="headerTitle">Kurs və İmtahan Mesajları</h1>
+</div>
+
+<div class="main">
+  <!-- MESAJLAR -->
+  <div class="section active" id="sectionMessages">
+    <div class="search-wrap">
+      <div class="search-box">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchMessages" placeholder="Kurs axtar..." autocomplete="off">
+      </div>
+    </div>
+    <div class="card-grid" id="msgList"></div>
+    <div class="msg-area" id="msgArea" style="display:none"></div>
+  </div>
+
+  <!-- İMTAHANLAR -->
+  <div class="section" id="sectionExams">
+    <div class="search-wrap">
+      <div class="search-box">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchExams" placeholder="Kurs axtar..." autocomplete="off">
+      </div>
+    </div>
+    <div class="card-grid" id="examList"></div>
+    <div class="msg-area" id="examArea" style="display:none"></div>
+  </div>
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <button class="nav-item active" onclick="switchTab('messages')">
+    <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span>Mesajlar</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('exams')">
+    <svg class="nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <span>İmtahanlar</span>
+  </button>
+</nav>
+
+<!-- Toast -->
+<div class="toast" id="toast">Mesaj kopyalandı</div>
+
+<script>
+const COURSES = [
+  {id:1, name:"Əmniyyətli İdarəetmə haqqında Beynəlxalq Məcəllə", abbr:"MKUB"},
+  {id:2, name:"Gəminin Mühafizəsi üzrə ümumi hazırlıq və təlimat", abbr:"ISPS-1"},
+  {id:3, name:"Gəminin Mühafizəsi üzrə müəyyən edilmiş vəzifələrə malik şəxslərin hazırlığı", abbr:"ISPS-2"},
+  {id:4, name:"Gəmi Əmniyyətliyi üzrə Məsul Şəxs", abbr:null},
+  {id:5, name:"Gəmi mühafizəsi üzrə məsul Şəxs", abbr:"ISPS-3"},
+  {id:6, name:"Bütün dənizçilər üçün təhlükəsizlik üzrə tanışlıq, ilkin hazırlıq və təlimat", abbr:"NBJS", dualBranch:true},
+  {id:7, name:"Kapitan Körpüsü Resurslarının İdarə Olunması", abbr:null},
+  {id:8, name:"Gəminin İdarə Olunması və Manevr Edilməsi", abbr:null},
+  {id:9, name:"Radar, avtomatik radar müşahidə vasitələri, kapitan körpüsü komandası və axtarış xilasetmə", abbr:null, subtitle:"idarəetmə səviyyəsində"},
+  {id:10, name:"Radar müşahidəsi və təsviri, avtomatik radar müşahidəsi vasitələrinin istismarı", abbr:null, subtitle:"istismar səviyyəsində"},
+  {id:11, name:"Elektron Xəritə Displeyinin və İnformasiya Sistemlərinin İstismar Qaydaları", abbr:null},
+  {id:12, name:"Sərnişinlərin, yükün və gəmi gövdəsinin təhlükəsizliyi üzrə hazırlıq", abbr:null},
+  {id:13, name:"Sərnişinlərə bilavasitə xidmət göstərən heyət üzvləri üçün təhlükəsizlik üzrə hazırlıq", abbr:null},
+  {id:14, name:"İzdihamın idarə olunması üzrə hazırlıq", abbr:null},
+  {id:15, name:"Böhran zamanı idarəetmə və insan davranışı üzrə hazırlıq", abbr:null},
+  {id:16, name:"Gəmi qazanalizatorları və onların istismarı", abbr:null},
+  {id:17, name:"İnert qaz sistemi", abbr:null},
+  {id:18, name:"1000 volt və artıq olan gərginlik sistemlərinin təhlükəsiz istismarı və onlara texniki nəzarət", abbr:null},
+  {id:19, name:"Gəmi elektrik mexaniklərinin ixtisasartırma kursu", abbr:null},
+  {id:20, name:"Gəmidə ilk tibbi yardım", abbr:null},
+  {id:21, name:"Gəmidə tibbi nəzarət", abbr:null},
+  {id:22, name:"Qlobal Dəniz Fəlakət və Əmniyyətli Rabitə Sisteminin Ümumi Operatoru", abbr:null},
+  {id:23, name:"Neft və Kimyəvi maddələr daşıyan tankerlərdə yük əməliyyatına dair ilkin hazırlıq və kvalifikasiya", abbr:null},
+  {id:24, name:"Neft tankerlərdə yük əməliyyatına dair geniş proqram üzrə hazırlıq", abbr:null},
+  {id:25, name:"Kimyəvi maddələr daşıyan tankerlərdə yük əməliyyatına dair geniş proqram üzrə hazırlıq", abbr:null},
+  {id:26, name:"Təhlükəli və zərərli yüklərin daşınması", abbr:null},
+  {id:27, name:"Maşın şöbəsinin resurslarının idarə olunması", abbr:null},
+  {id:28, name:"Liderlik və heyətlə iş birliyi", abbr:null},
+  {id:29, name:"Yanğınla mübarizə geniş proqram üzrə", abbr:null},
+  {id:30, name:"Sürətli olmayan xilasedici qayıq, növbətçi qayıq və sallar üzrə mütəxəssis", abbr:null, dualBranch:true},
+  {id:31, name:"Sürətli xilasetmə qayıqlar üzrə mütəxəssis", abbr:null},
+  {id:32, name:"Liderlik idarəetmə bacarıqları", abbr:null},
+  {id:33, name:"Liman Vasitələrinin mühafizəsinə məsul şəxsin hazırlığı", abbr:null}
+];
+
+const BRANCHES = {
+  elmler: {name:"Elmlər", map:"https://maps.app.goo.gl/Dc2B434XsM8aTFgu8"},
+  ramana: {name:"Ramana", map:"https://maps.app.goo.gl/WuJ8NdbjYYQXct5D6"}
+};
+
+let currentTab = "messages";
+let selectedCourse = null;
+let selectedBranch = "elmler";
+let isEditing = false;
+let editContent = "";
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+  if (tab === "messages") {
+    document.getElementById("sectionMessages").classList.add("active");
+    document.querySelectorAll(".nav-item")[0].classList.add("active");
+    document.getElementById("headerTitle").textContent = "Mesajlar";
+    hideMsgArea("msgArea");
+    document.getElementById("searchMessages").value = "";
+    renderCourseList("msgList", "messages", "");
+  } else {
+    document.getElementById("sectionExams").classList.add("active");
+    document.querySelectorAll(".nav-item")[1].classList.add("active");
+    document.getElementById("headerTitle").textContent = "İmtahanlar";
+    hideMsgArea("examArea");
+    document.getElementById("searchExams").value = "";
+    renderCourseList("examList", "exams", "");
+  }
+}
+
+function hideMsgArea(areaId) {
+  const area = document.getElementById(areaId);
+  area.style.display = "none";
+  area.innerHTML = "";
+  selectedCourse = null;
+  isEditing = false;
+  editContent = "";
+}
+
+function renderCourseList(containerId, mode, query) {
+  const container = document.getElementById(containerId);
+  const q = query.toLowerCase().trim();
+  let filtered = COURSES;
+  if (q) {
+    filtered = COURSES.filter(c =>
+      c.name.toLowerCase().includes(q) ||
+      (c.abbr && c.abbr.toLowerCase().includes(q))
+    );
+  }
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div><p>Nəticə tapılmadı</p></div>';
+    return;
+  }
+  container.innerHTML = filtered.map(c => {
+    const subtitle = c.subtitle ? `<div class="card-subtitle">${c.subtitle}</div>` : "";
+    const badge = c.dualBranch ? `<div class="card-badge">2 filial</div>` : "";
+    return `<div class="card" onclick="selectCourse(${c.id},'${mode}')">
+      <div class="card-inner">
+        <div class="card-header">
+          <span class="card-number">${c.id}</span>
+          <span class="card-title">${c.name}</span>
+        </div>
+        ${subtitle}${badge}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function selectCourse(id, mode) {
+  selectedCourse = COURSES.find(c => c.id === id);
+  selectedBranch = "elmler";
+  isEditing = false;
+  editContent = "";
+  const areaId = mode === "messages" ? "msgArea" : "examArea";
+  const area = document.getElementById(areaId);
+  area.style.display = "block";
+  renderMsgPreview(areaId, mode);
+  area.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function renderMsgPreview(areaId, mode) {
+  const area = document.getElementById(areaId);
+  const c = selectedCourse;
+  if (!c) return;
+
+  let branchHtml = "";
+  if (c.dualBranch) {
+    branchHtml = `<div class="branch-selector">
+      <button class="branch-btn ${selectedBranch==='elmler'?'active':''}" onclick="setBranch('elmler','${mode}')">Elmlər</button>
+      <button class="branch-btn ${selectedBranch==='ramana'?'active':''}" onclick="setBranch('ramana','${mode}')">Ramana</button>
+    </div>`;
+  }
+
+  let inputsHtml = "";
+  if (mode === "messages") {
+    inputsHtml = `<div class="msg-inputs">
+      <div><label>Tarix</label><input type="text" id="msgDate" placeholder="21.08.2026" oninput="updatePreview('${areaId}','${mode}')"></div>
+    </div>`;
+  } else {
+    inputsHtml = `<div class="msg-inputs">
+      <div class="msg-input-row">
+        <div><label>Tarix</label><input type="text" id="examDate" placeholder="21.08.2026" oninput="updatePreview('${areaId}','${mode}')"></div>
+        <div><label>Saat</label><input type="text" id="examTime" placeholder="11:30" oninput="updatePreview('${areaId}','${mode}')"></div>
+      </div>
+    </div>`;
+  }
+
+  const message = generateMessage(mode);
+  const previewContent = isEditing
+    ? `<textarea class="msg-edit-area" id="editArea" oninput="editContent=this.value">${editContent}</textarea>`
+    : `<div class="msg-preview" id="msgPreview">${escapeHtml(message)}</div>`;
+
+  const editBtnLabel = isEditing ? "HAZIRDIR" : "DÜZƏLİŞ ET";
+
+  area.innerHTML = `
+    <div class="msg-card">
+      <div class="msg-header">
+        <button class="msg-header-back" onclick="hideMsgArea('${areaId}')">&larr;</button>
+        <span class="msg-header-title">${c.name}</span>
+      </div>
+      <div class="msg-body">
+        ${branchHtml}
+        ${inputsHtml}
+        ${previewContent}
+        <div class="btn-row">
+          <button class="btn btn-copy" onclick="copyMessage('${mode}')">KOPYALA</button>
+          <button class="btn btn-edit" onclick="toggleEdit('${areaId}','${mode}')">${editBtnLabel}</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function generateMessage(mode) {
+  const c = selectedCourse;
+  const branch = BRANCHES[selectedBranch];
+  if (mode === "messages") {
+    const dateVal = document.getElementById("msgDate") ? document.getElementById("msgDate").value : "";
+    const date = dateVal || "öz_tarixim";
+    return `Salam,\n\n${c.name} saat 08:30-da ${date} tarixində ${branch.name} filialında başlayacaq.\n\n\u{1F4CD} Konum: ${branch.map}\n\nKursda iştirak edə biləcəksiniz?`;
+  } else {
+    const dateVal = document.getElementById("examDate") ? document.getElementById("examDate").value : "";
+    const timeVal = document.getElementById("examTime") ? document.getElementById("examTime").value : "";
+    const date = dateVal || "öz_tarixim";
+    const time = timeVal || "öz_saatım";
+    return `Salam,\n\nDövlət Dəniz və Liman Agentliyi tərəfindən ${c.name} kursunun imtahanı keçiriləcəkdir.\n\n\u{1F4C5} Tarix: ${date}\n\u23F0 Saat: ${time}\n\u{1F4CD} Yerləşdiyi ünvan: Dövlət Dəniz və Liman Agentliyi\n\u{1F517} Konum: https://maps.app.goo.gl/Dc2B434XsM8aTFgu8\n\nQeyd: İmtahana gələrkən şəxsiyyət vəsiqənizin əslini və 2 ədəd kopyasını özünüzlə gətirməyiniz mütləqdir. Əks təqdirdə imtahana buraxılmayacaqsınız.`;
+  }
+}
+
+function updatePreview(areaId, mode) {
+  if (isEditing) return;
+  const preview = document.getElementById("msgPreview");
+  if (preview) {
+    preview.textContent = generateMessage(mode);
+  }
+}
+
+function setBranch(branch, mode) {
+  selectedBranch = branch;
+  const areaId = mode === "messages" ? "msgArea" : "examArea";
+  renderMsgPreview(areaId, mode);
+}
+
+function toggleEdit(areaId, mode) {
+  if (isEditing) {
+    isEditing = false;
+    editContent = "";
+  } else {
+    isEditing = true;
+    editContent = generateMessage(mode);
+  }
+  renderMsgPreview(areaId, mode);
+}
+
+function getMessage(mode) {
+  if (isEditing) return editContent;
+  return generateMessage(mode);
+}
+
+function copyMessage(mode) {
+  const text = getMessage(mode);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => showToast()).catch(() => fallbackCopy(text));
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.left = "-9999px";
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand("copy");
+    showToast();
+  } catch(e) {
+    alert("Kopyalama uğursuz oldu. Zəhmət olmasa mesajı əl ilə seçib kopyalayın.");
+  }
+  document.body.removeChild(ta);
+}
+
+function showToast() {
+  const t = document.getElementById("toast");
+  t.classList.add("show");
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+// Search handlers
+document.getElementById("searchMessages").addEventListener("input", function() {
+  if (selectedCourse) hideMsgArea("msgArea");
+  renderCourseList("msgList", "messages", this.value);
+});
+document.getElementById("searchExams").addEventListener("input", function() {
+  if (selectedCourse) hideMsgArea("examArea");
+  renderCourseList("examList", "exams", this.value);
+});
+
+// Init
+renderCourseList("msgList", "messages", "");
+renderCourseList("examList", "exams", "");
+</script>
+</body>
+</html>
