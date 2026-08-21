@@ -512,11 +512,40 @@ function openCategory(id){
 
 function renderAdminDetail(){
   let items=[];
-  if(adminCatId==="mixed")items=DB.mixed.map(m=>({id:m.id,title:m.title,content:m.content}));
+  if(adminCatId==="courses"||adminCatId==="exams"){
+    items=DB.courses.map(c=>{
+      let preview="";
+      if(c.abbr)preview="Abbr: "+c.abbr;
+      if(c.subtitle)preview+=(preview?" | ":"")+"Alt: "+c.subtitle;
+      return {id:String(c.id),title:c.name,content:preview||"Kurs"};
+    });
+  }
+  else if(adminCatId==="mixed")items=DB.mixed.map(m=>({id:m.id,title:m.title,content:m.content}));
   else if(adminCatId.startsWith("custom_")){
     const cat=DB.custom.find(c=>c.id===adminCatId);
     if(cat)items=cat.items.map(i=>({...i}));
   }
+  const container=document.getElementById("adminMsgItems");
+  if(!items||items.length===0){
+    container.innerHTML='<div class="empty-state"><p>Hələ mesaj yoxdur</p></div>';
+    return;
+  }
+  container.innerHTML=items.map(item=>`
+    <div class="admin-msg-item">
+      <div class="admin-msg-content">
+        <div class="admin-msg-title">${item.title}</div>
+        <div class="admin-msg-preview">${item.content}</div>
+      </div>
+      <div class="admin-actions">
+        <button class="admin-action-btn" onclick="editItem('${item.id}')" title="Redaktə">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+        </button>
+        <button class="admin-action-btn danger" onclick="deleteItem('${item.id}')" title="Sil">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+      </div>
+    </div>`).join("");
+}
   document.getElementById("adminMsgItems").innerHTML=items.length===0?'<div class="empty-state"><p>Hələ mesaj yoxdur</p></div>':items.map(item=>`
     <div class="admin-msg-item">
       <div class="admin-msg-content">
