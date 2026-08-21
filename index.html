@@ -10,8 +10,8 @@
   --primary:#0f172a;--primary-mid:#1e293b;--primary-light:#334155;
   --accent:#2563eb;--accent-hover:#1d4ed8;--accent-soft:#eff6ff;
   --bg:#f8fafc;--card:#ffffff;--text:#0f172a;--text-sec:#64748b;
-  --border:#e2e8f0;--border-focus:#2563eb;
-  --success:#16a34a;--success-bg:#f0fdf4;
+  --border:#e2e8f0;
+  --success:#16a34a;
   --shadow-xs:0 1px 2px rgba(0,0,0,.04);
   --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
   --shadow-md:0 4px 12px rgba(0,0,0,.08);
@@ -23,15 +23,13 @@ html{font-size:16px;-webkit-text-size-adjust:100%}
 body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
 /* Header */
-.header{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(226,232,240,.6);padding:0 20px}
-.header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:var(--header-h)}
-.logo{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:800;color:var(--primary);letter-spacing:-.02em}
-
-/* Tabs */
-.tab-bar{display:flex;background:#f1f5f9;border-radius:var(--radius-sm);padding:4px;gap:2px}
-.tab-btn{flex:1;padding:10px 20px;border:none;background:transparent;border-radius:var(--radius-xs);font-size:.88rem;font-weight:600;color:var(--text-sec);cursor:pointer;transition:all .25s ease;white-space:nowrap;position:relative}
+.header{position:sticky;top:0;z-index:90;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(226,232,240,.6);padding:0 16px}
+.header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:center;height:var(--header-h);gap:12px}
+.logo{font-size:1rem;font-weight:800;color:var(--primary);letter-spacing:-.02em;display:none}
+.tab-bar{display:flex;background:#f1f5f9;border-radius:var(--radius-sm);padding:4px;gap:2px;width:100%}
+.tab-btn{flex:1;padding:10px 12px;border:none;background:transparent;border-radius:var(--radius-xs);font-size:.85rem;font-weight:600;color:var(--text-sec);cursor:pointer;transition:all .25s ease;white-space:nowrap;text-align:center}
 .tab-btn.active{background:var(--card);color:var(--primary);box-shadow:var(--shadow);font-weight:700}
-.tab-btn:not(.active):hover{color:var(--text);background:rgba(255,255,255,.5)}
+.tab-btn:not(.active):hover{color:var(--text)}
 
 /* Main */
 .main{max-width:960px;margin:0 auto;padding:20px 20px 40px;min-height:calc(100vh - var(--header-h))}
@@ -51,432 +49,567 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Roboto,'Hel
 
 /* Course list */
 .course-list{display:flex;flex-direction:column;gap:6px}
-.course-item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s ease;position:relative}
-.course-item:hover{border-color:var(--accent);box-shadow:var(--shadow);transform:translateY(-1px)}
-.course-item:active{transform:scale(.995)}
+.course-item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s ease}
+.course-item:hover{border-color:var(--accent);box-shadow:var(--shadow)}
 .course-num{display:flex;align-items:center;justify-content:center;min-width:32px;height:32px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:.78rem;font-weight:800;flex-shrink:0}
 .course-item:hover .course-num{background:var(--accent);color:#fff}
 .course-info{flex:1;min-width:0}
 .course-name{font-size:.9rem;font-weight:600;color:var(--text);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .course-sub{font-size:.75rem;color:var(--text-sec);margin-top:2px;font-weight:500}
-.course-arrow{color:#cbd5e0;flex-shrink:0;transition:color .2s,transform .2s}
+.course-arrow{color:#cbd5e0;flex-shrink:0;transition:all .2s}
 .course-item:hover .course-arrow{color:var(--accent);transform:translateX(2px)}
-.course-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:.68rem;font-weight:700;background:#fef3c7;color:#b45309;margin-top:4px;width:fit-content}
-.course-item:hover .course-badge{background:#fde68a}
+.course-badge{display:inline-flex;padding:2px 8px;border-radius:20px;font-size:.68rem;font-weight:700;background:#fef3c7;color:#b45309;margin-top:4px;width:fit-content}
 
 /* Empty state */
 .empty-state{text-align:center;padding:48px 20px;color:var(--text-sec)}
-.empty-state svg{margin-bottom:12px;opacity:.3}
 .empty-state p{font-size:.95rem;font-weight:500}
 
-/* Modal overlay */
-.modal-overlay{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s ease}
+/* Modal */
+.modal-overlay{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;visibility:hidden;transition:all .25s ease}
 .modal-overlay.open{opacity:1;visibility:visible}
 .modal-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .modal{position:relative;z-index:1;width:100%;max-width:560px;max-height:90vh;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-lg);overflow:hidden;display:flex;flex-direction:column;transform:scale(.95) translateY(10px);transition:transform .25s ease}
 .modal-overlay.open .modal{transform:scale(1) translateY(0)}
-.modal-head{padding:20px 24px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
-.modal-head-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.modal-head{padding:20px 24px 16px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
 .modal-title{font-size:1rem;font-weight:700;color:var(--primary);line-height:1.4;flex:1}
 .modal-close{width:36px;height:36px;border-radius:var(--radius-xs);border:1.5px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-sec);transition:all .2s;flex-shrink:0}
-.modal-close:hover{background:#f1f5f9;color:var(--text);border-color:#cbd5e0}
+.modal-close:hover{background:#f1f5f9;color:var(--text)}
 .modal-body{padding:20px 24px;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch}
-
-/* Branch selector in modal */
 .branch-selector{display:flex;gap:8px;margin-bottom:16px}
 .branch-btn{flex:1;padding:11px;border:1.5px solid var(--border);border-radius:var(--radius-xs);background:var(--card);font-size:.88rem;font-weight:600;cursor:pointer;text-align:center;transition:all .2s;color:var(--text-sec)}
 .branch-btn.active{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
-.branch-btn:not(.active):hover{border-color:#94a3b8;color:var(--text)}
-
-/* Inputs in modal */
 .modal-inputs{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
 .modal-inputs label{font-size:.75rem;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:.04em}
-.modal-inputs input{padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-xs);font-size:.95rem;background:var(--card);color:var(--text);outline:none;transition:all .2s;width:100%;font-weight:500}
+.modal-inputs input{padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-xs);font-size:.95rem;background:var(--card);color:var(--text);outline:none;transition:all .2s;width:100%}
 .modal-inputs input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
 .modal-input-row{display:flex;gap:12px}
 .modal-input-row>div{flex:1}
-
-/* Message preview */
-.msg-preview{background:#f8fafc;border:1.5px solid var(--border);border-radius:var(--radius-xs);padding:16px;font-size:.9rem;line-height:1.75;white-space:pre-wrap;word-break:break-word;color:var(--text);min-height:80px;font-family:inherit}
-
-/* Edit textarea */
-.msg-edit-area{width:100%;min-height:160px;padding:14px;border:1.5px solid var(--accent);border-radius:var(--radius-xs);font-size:.9rem;line-height:1.75;resize:vertical;font-family:inherit;color:var(--text);outline:none;background:var(--card)}
-.msg-edit-area:focus{box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-
-/* Modal footer buttons */
-.modal-footer{padding:16px 24px 20px;border-top:1px solid var(--border);display:flex;gap:10px;flex-shrink:0}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border:none;border-radius:var(--radius-xs);font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;flex:1}
-.btn-copy{background:var(--accent);color:#fff}
+.msg-preview{background:#f8fafc;border:1.5px solid var(--border);border-radius:var(--radius-xs);padding:16px;font-size:.9rem;line-height:1.75;white-space:pre-wrap;word-break:break-word;color:var(--text);min-height:80px}
+.modal-footer{padding:16px 24px 20px;border-top:1px solid var(--border);display:flex;flex-shrink:0}
+.btn-copy{display:flex;align-items:center;justify-content:center;width:100%;padding:13px;border:none;border-radius:var(--radius-xs);background:var(--accent);color:#fff;font-size:.92rem;font-weight:700;cursor:pointer;transition:all .2s}
 .btn-copy:hover{background:var(--accent-hover);box-shadow:0 4px 12px rgba(37,99,235,.3)}
-.btn-copy:active{transform:scale(.97)}
-.btn-edit{background:#f1f5f9;color:var(--text)}
-.btn-edit:hover{background:#e2e8f0}
-.btn-edit:active{transform:scale(.97)}
+.btn-copy:active{transform:scale(.98)}
 
 /* Toast */
 .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--primary);color:#fff;padding:12px 24px;border-radius:var(--radius-sm);font-weight:700;font-size:.9rem;box-shadow:var(--shadow-lg);z-index:300;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s ease;opacity:0;pointer-events:none;white-space:nowrap;display:flex;align-items:center;gap:8px}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .toast-icon{width:20px;height:20px;border-radius:50%;background:var(--success);display:flex;align-items:center;justify-content:center}
 
-/* Desktop tweaks */
+/* ===== ADMIN PANEL ===== */
+.admin-panel{position:fixed;inset:0;z-index:400;background:var(--bg);display:none;flex-direction:column;overflow-y:auto}
+.admin-panel.open{display:flex}
+.admin-header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.admin-title{font-size:1.05rem;font-weight:800;color:var(--primary)}
+.admin-back{padding:8px 16px;border:1.5px solid var(--border);border-radius:var(--radius-xs);background:var(--card);font-size:.85rem;font-weight:600;cursor:pointer;color:var(--text-sec);transition:all .2s}
+.admin-back:hover{background:#f1f5f9;color:var(--text)}
+.admin-body{max-width:960px;margin:0 auto;width:100%;padding:20px;flex:1}
+.admin-section-label{font-size:.72rem;font-weight:800;color:var(--text-sec);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;margin-top:20px}
+.admin-cat-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.admin-cat-item{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s}
+.admin-cat-item:hover{border-color:var(--accent)}
+.admin-cat-name{font-size:.9rem;font-weight:600;color:var(--text)}
+.admin-cat-count{font-size:.78rem;color:var(--text-sec);font-weight:500}
+.admin-add-btn{width:100%;padding:12px;border:2px dashed var(--border);border-radius:var(--radius-sm);background:transparent;font-size:.88rem;font-weight:600;color:var(--text-sec);cursor:pointer;transition:all .2s}
+.admin-add-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.admin-msg-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.admin-msg-item{display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius-sm)}
+.admin-msg-content{flex:1;min-width:0}
+.admin-msg-title{font-size:.85rem;font-weight:600;color:var(--text);line-height:1.45;margin-bottom:4px}
+.admin-msg-preview{font-size:.78rem;color:var(--text-sec);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-wrap}
+.admin-actions{display:flex;gap:6px;flex-shrink:0}
+.admin-action-btn{width:34px;height:34px;border-radius:var(--radius-xs);border:1.5px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-sec);transition:all .15s}
+.admin-action-btn:hover{background:#f1f5f9}
+.admin-action-btn.danger:hover{border-color:#ef4444;color:#ef4444;background:#fef2f2}
+.admin-input-group{margin-bottom:12px}
+.admin-input-group label{display:block;font-size:.75rem;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.admin-input-group input,.admin-input-group textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-xs);font-size:.9rem;background:var(--card);color:var(--text);outline:none;transition:border-color .2s;font-family:inherit;line-height:1.6}
+.admin-input-group input:focus,.admin-input-group textarea:focus{border-color:var(--accent)}
+.admin-input-group textarea{min-height:140px;resize:vertical;white-space:pre-wrap}
+.admin-form-footer{display:flex;gap:10px;margin-top:16px}
+.admin-save{flex:1;padding:12px;border:none;border-radius:var(--radius-xs);background:var(--accent);color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s}
+.admin-save:hover{background:var(--accent-hover)}
+.admin-cancel{flex:1;padding:12px;border:1.5px solid var(--border);border-radius:var(--radius-xs);background:var(--card);font-size:.9rem;font-weight:600;cursor:pointer;color:var(--text-sec);transition:all .2s}
+.admin-cancel:hover{background:#f1f5f9}
+.admin-sub-view{display:none}
+.admin-sub-view.active{display:block}
+
 @media(min-width:768px){
   .course-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .header{padding:0 32px}
-  .main{padding:24px 32px 48px}
-  .tab-btn{padding:10px 28px}
-  .modal{max-width:600px}
+  .logo{display:block}
+  .header-inner{justify-content:space-between}
+  .tab-bar{width:auto;min-width:320px}
+  .tab-btn{padding:10px 24px}
 }
-@media(min-width:1024px){
-  .course-list{grid-template-columns:1fr 1fr 1fr}
-}
-
-/* Scrollbar */
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-thumb{background:#cbd5e0;border-radius:3px}
-::-webkit-scrollbar-track{background:transparent}
-
-/* Focus visible for accessibility */
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 </head>
 <body>
 
-<!-- Header with tabs -->
+<!-- Header -->
 <header class="header">
   <div class="header-inner">
-    <div class="logo">
-      <span>Mesajlar</span>
-    </div>
+    <div class="logo">Mesajlar</div>
     <div class="tab-bar">
-      <button class="tab-btn active" id="tabMsg" onclick="switchTab('messages')">
-        Mesajlar
-      </button>
-      <button class="tab-btn" id="tabExam" onclick="switchTab('exams')">
-        İmtahanlar
-      </button>
+      <button class="tab-btn active" id="tabMsg" onclick="switchTab('messages')">Mesajlar</button>
+      <button class="tab-btn" id="tabExam" onclick="switchTab('exams')">İmtahanlar</button>
+      <button class="tab-btn" id="tabMixed" onclick="switchTab('mixed')">Qarışıq</button>
     </div>
   </div>
 </header>
 
-<!-- Main content -->
 <div class="main">
-  <!-- MESAJLAR -->
   <div class="section active" id="sectionMessages">
-    <div class="search-wrap">
-      <div class="search-box">
-        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="searchMessages" placeholder="Kurs axtar..." autocomplete="off">
-      </div>
-    </div>
+    <div class="search-wrap"><div class="search-box"><svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="searchMessages" placeholder="Kurs axtar..." autocomplete="off"></div></div>
     <div class="course-list" id="msgList"></div>
   </div>
 
-  <!-- İMTAHANLAR -->
   <div class="section" id="sectionExams">
-    <div class="search-wrap">
-      <div class="search-box">
-        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="searchExams" placeholder="Kurs axtar..." autocomplete="off">
-      </div>
-    </div>
+    <div class="search-wrap"><div class="search-box"><svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="searchExams" placeholder="Kurs axtar..." autocomplete="off"></div></div>
     <div class="course-list" id="examList"></div>
+  </div>
+
+  <div class="section" id="sectionMixed">
+    <div class="course-list" id="mixedList"></div>
   </div>
 </div>
 
-<!-- Modal -->
+<!-- Message Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal-backdrop" onclick="closeModal()"></div>
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-head">
-      <div class="modal-head-top">
-        <span class="modal-title" id="modalTitle"></span>
-        <button class="modal-close" onclick="closeModal()" aria-label="Bağla">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
+      <span class="modal-title" id="modalTitle"></span>
+      <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="modal-body" id="modalBody"></div>
-    <div class="modal-footer" id="modalFooter">
-      <button class="btn btn-copy" onclick="copyMessage()">KOPYALA</button>
-      <button class="btn btn-edit" id="btnEdit" onclick="toggleEdit()">DÜZƏLİŞ ET</button>
-    </div>
+    <div class="modal-footer"><button class="btn-copy" onclick="copyMessage()">KOPYALA</button></div>
   </div>
 </div>
 
 <!-- Toast -->
-<div class="toast" id="toast">
-  <span class="toast-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-  Mesaj kopyalandı
+<div class="toast" id="toast"><span class="toast-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Mesaj kopyalandı</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-header">
+    <span class="admin-title">Admin Panel</span>
+    <button class="admin-back" onclick="closeAdmin()">Geri qayıt</button>
+  </div>
+  <div class="admin-body">
+
+    <!-- Main admin view -->
+    <div class="admin-sub-view active" id="adminMainView">
+      <div class="admin-section-label">Bölmələr</div>
+      <div class="admin-cat-grid" id="adminCategories"></div>
+    </div>
+
+    <!-- Category detail view -->
+    <div class="admin-sub-view" id="adminDetailView">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+        <button class="admin-back" onclick="showAdminMain()" style="padding:8px 12px;">&larr;</button>
+        <span class="admin-title" id="adminDetailTitle"></span>
+      </div>
+      <div class="admin-msg-list" id="adminMsgItems"></div>
+      <button class="admin-add-btn" onclick="openItemForm(null)" style="margin-top:12px;">+ Yeni mesaj əlavə et</button>
+    </div>
+
+    <!-- Item form -->
+    <div class="admin-sub-view" id="adminFormView">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+        <button class="admin-back" onclick="showAdminDetail()" style="padding:8px 12px;">&larr;</button>
+        <span class="admin-title" id="adminFormTitle"></span>
+      </div>
+      <div class="admin-input-group"><label>Başlıq / Ad</label><input type="text" id="formItemTitle"></div>
+      <div class="admin-input-group"><label>Mesaj mətni</label><textarea id="formItemContent"></textarea></div>
+      <div class="admin-form-footer">
+        <button class="admin-save" onclick="saveItem()">Yadda saxla</button>
+        <button class="admin-cancel" onclick="showAdminDetail()">Ləğv et</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <script>
-const COURSES = [
-  {id:1, name:"Əmniyyətli İdarəetmə haqqında Beynəlxalq Məcəllə", abbr:"MKUB"},
-  {id:2, name:"Gəminin Mühafizəsi üzrə ümumi hazırlıq və təlimat", abbr:"ISPS-1"},
-  {id:3, name:"Gəminin Mühafizəsi üzrə müəyyən edilmiş vəzifələrə malik şəxslərin hazırlığı", abbr:"ISPS-2"},
-  {id:4, name:"Gəmi Əmniyyətliyi üzrə Məsul Şəxs", abbr:null},
-  {id:5, name:"Gəmi mühafizəsi üzrə məsul Şəxs", abbr:"ISPS-3"},
-  {id:6, name:"Bütün dənizçilər üçün təhlükəsizlik üzrə tanışlıq, ilkin hazırlıq və təlimat", abbr:"NBJS", dualBranch:true},
-  {id:7, name:"Kapitan Körpüsü Resurslarının İdarə Olunması", abbr:null},
-  {id:8, name:"Gəminin İdarə Olunması və Manevr Edilməsi", abbr:null},
-  {id:9, name:"Radar, avtomatik radar müşahidə vasitələri, kapitan körpüsü komandası və axtarış xilasetmə", abbr:null, subtitle:"idarəetmə səviyyəsində"},
-  {id:10, name:"Radar müşahidəsi və təsviri, avtomatik radar müşahidəsi vasitələrinin istismarı", abbr:null, subtitle:"istismar səviyyəsində"},
-  {id:11, name:"Elektron Xəritə Displeyinin və İnformasiya Sistemlərinin İstismar Qaydaları", abbr:null},
-  {id:12, name:"Sərnişinlərin, yükün və gəmi gövdəsinin təhlükəsizliyi üzrə hazırlıq", abbr:null},
-  {id:13, name:"Sərnişinlərə bilavasitə xidmət göstərən heyət üzvləri üçün təhlükəsizlik üzrə hazırlıq", abbr:null},
-  {id:14, name:"İzdihamın idarə olunması üzrə hazırlıq", abbr:null},
-  {id:15, name:"Böhran zamanı idarəetmə və insan davranışı üzrə hazırlıq", abbr:null},
-  {id:16, name:"Gəmi qazanalizatorları və onların istismarı", abbr:null},
-  {id:17, name:"İnert qaz sistemi", abbr:null},
-  {id:18, name:"1000 volt və artıq olan gərginlik sistemlərinin təhlükəsiz istismarı və onlara texniki nəzarət", abbr:null},
-  {id:19, name:"Gəmi elektrik mexaniklərinin ixtisasartırma kursu", abbr:null},
-  {id:20, name:"Gəmidə ilk tibbi yardım", abbr:null},
-  {id:21, name:"Gəmidə tibbi nəzarət", abbr:null},
-  {id:22, name:"Qlobal Dəniz Fəlakət və Əmniyyətli Rabitə Sisteminin Ümumi Operatoru", abbr:null},
-  {id:23, name:"Neft və Kimyəvi maddələr daşıyan tankerlərdə yük əməliyyatına dair ilkin hazırlıq və kvalifikasiya", abbr:null},
-  {id:24, name:"Neft tankerlərdə yük əməliyyatına dair geniş proqram üzrə hazırlıq", abbr:null},
-  {id:25, name:"Kimyəvi maddələr daşıyan tankerlərdə yük əməliyyatına dair geniş proqram üzrə hazırlıq", abbr:null},
-  {id:26, name:"Təhlükəli və zərərli yüklərin daşınması", abbr:null},
-  {id:27, name:"Maşın şöbəsinin resurslarının idarə olunması", abbr:null},
-  {id:28, name:"Liderlik və heyətlə iş birliyi", abbr:null},
-  {id:29, name:"Yanğınla mübarizə geniş proqram üzrə", abbr:null},
-  {id:30, name:"Sürətli olmayan xilasedici qayıq, növbətçi qayıq və sallar üzrə mütəxəssis", abbr:null, dualBranch:true},
-  {id:31, name:"Sürətli xilasetmə qayıqlar üzrə mütəxəssis", abbr:null},
-  {id:32, name:"Liderlik idarəetmə bacarıqları", abbr:null},
-  {id:33, name:"Liman Vasitələrinin mühafizəsinə məsul şəxsin hazırlığı", abbr:null}
+const DEFAULT_COURSES = [
+  {id:1,name:"Əmniyyətli İdarəetmə haqqında Beynəlxalq Məcəllə",abbr:"MKUB"},
+  {id:2,name:"Gəminin Mühafizəsi üzrə ümumi hazırlıq və təlimat",abbr:"ISPS-1"},
+  {id:3,name:"Gəminin Mühafizəsi üzrə müəyyən edilmiş vəzifələrə malik şəxslərin hazırlığı",abbr:"ISPS-2"},
+  {id:4,name:"Gəmi Əmniyyətliyi üzrə Məsul Şəxs",abbr:null},
+  {id:5,name:"Gəmi mühafizəsi üzrə məsul Şəxs",abbr:"ISPS-3"},
+  {id:6,name:"Bütün dənizçilər üçün təhlükəsizlik üzrə tanışlıq, ilkin hazırlıq və təlimat",abbr:"NBJS",dualBranch:true},
+  {id:7,name:"Kapitan Körpüsü Resurslarının İdarə Olunması",abbr:null},
+  {id:8,name:"Gəminin İdarə Olunması və Manevr Edilməsi",abbr:null},
+  {id:9,name:"Radar, avtomatik radar müşahidə vasitələri, kapitan körpüsü komandası və axtarış xilasetmə",abbr:null,subtitle:"idarəetmə səviyyəsində"},
+  {id:10,name:"Radar müşahidəsi və təsviri, avtomatik radar müşahidəsi vasitələrinin istismarı",abbr:null,subtitle:"istismar səviyyəsində"},
+  {id:11,name:"Elektron Xəritə Displeyinin və İnformasiya Sistemlərinin İstismar Qaydaları",abbr:null},
+  {id:12,name:"Sərnişinlərin, yükün və gəmi gövdəsinin təhlükəsizliyi üzrə hazırlıq",abbr:null},
+  {id:13,name:"Sərnişinlərə bilavasitə xidmət göstərən heyət üzvləri üçün təhlükəsizlik üzrə hazırlıq",abbr:null},
+  {id:14,name:"İzdihamın idarə olunması üzrə hazırlıq",abbr:null},
+  {id:15,name:"Böhran zamanı idarəetmə və insan davranışı üzrə hazırlıq",abbr:null},
+  {id:16,name:"Gəmi qazanalizatorları və onların istismarı",abbr:null},
+  {id:17,name:"İnert qaz sistemi",abbr:null},
+  {id:18,name:"1000 volt və artıq olan gərginlik sistemlərinin təhlükəsiz istismarı və onlara texniki nəzarət",abbr:null},
+  {id:19,name:"Gəmi elektrik mexaniklərinin ixtisasartırma kursu",abbr:null},
+  {id:20,name:"Gəmidə ilk tibbi yardım",abbr:null},
+  {id:21,name:"Gəmidə tibbi nəzarət",abbr:null},
+  {id:22,name:"Qlobal Dəniz Fəlakət və Əmniyyətli Rabitə Sisteminin Ümumi Operatoru",abbr:null},
+  {id:23,name:"Neft və Kimyəvi maddələr daşıyan tankerlərdə yük əməliyyatına dair ilkin hazırlıq və kvalifikasiya",abbr:null},
+  {id:24,name:"Neft tankerlərdə yük əməliyyatına dair geniş proqram üzrə hazırlıq",abbr:null},
+  {id:25,name:"Kimyəvi maddələr daşıyan tankerlərdə yük əməliyyatına dair geniş proqram üzrə hazırlıq",abbr:null},
+  {id:26,name:"Təhlükəli və zərərli yüklərin daşınması",abbr:null},
+  {id:27,name:"Maşın şöbəsinin resurslarının idarə olunması",abbr:null},
+  {id:28,name:"Liderlik və heyətlə iş birliyi",abbr:null},
+  {id:29,name:"Yanğınla mübarizə geniş proqram üzrə",abbr:null},
+  {id:30,name:"Sürətli olmayan xilasedici qayıq, növbətçi qayıq və sallar üzrə mütəxəssis",abbr:null,dualBranch:true},
+  {id:31,name:"Sürətli xilasetmə qayıqlar üzrə mütəxəssis",abbr:null},
+  {id:32,name:"Liderlik idarəetmə bacarıqları",abbr:null},
+  {id:33,name:"Liman Vasitələrinin mühafizəsinə məsul şəxsin hazırlığı",abbr:null}
 ];
 
 const BRANCHES = {
-  elmler: {name:"Elmlər", map:"https://maps.app.goo.gl/Dc2B434XsM8aTFgu8"},
-  ramana: {name:"Ramana", map:"https://maps.app.goo.gl/WuJ8NdbjYYQXct5D6"}
+  elmler:{name:"Elmlər",map:"https://maps.app.goo.gl/Dc2B434XsM8aTFgu8"},
+  ramana:{name:"Ramana",map:"https://maps.app.goo.gl/WuJ8NdbjYYQXct5D6"}
 };
 
-let currentTab = "messages";
-let selectedCourse = null;
-let selectedBranch = "elmler";
-let isEditing = false;
-let editContent = "";
+const DEFAULT_MIXED = [
+  {id:"m1",title:"Sənəd tələbi",content:"Salam, hər vaxtınız xeyir.\n\nZəhmət olmasa, aşağıda qeyd etdiyim sənədləri göndərərsiniz:\n\n* Şəxsiyyət vəsiqəsinin ön və arxa tərəfi\n* Tibbi kitabçanın şəkil olan hissəi və təkrar müayinədən keçmə hissəsi\n* Diplomun şəkli"},
+  {id:"m2",title:"6–9 aylıq kurslar haqqında",content:"Salam.\n\n6–9 aylıq kurslar hazırda fəaliyyət göstərmir. Kursların nə vaxt yenidən açılacağı ilə bağlı isə hələlik dəqiq məlumat yoxdur.\n\nBu kurslara yazılmaq üçün Azərbaycan Dövlət Dəniz Akademiyasını (ADDA) və ya Azərbaycan Dövlət Dənizçilik Kollecini (ADK) bitirmək tələb olunur."},
+  {id:"m3",title:"Ödəniş xəbərdarlığı",content:"Salam,\nX kurs üzrə ödənişiniz olunmayıb.\nZəhmət olmasa, ödənişi nə vaxt edəcəyiniz barədə məlumat verməyinizi xahiş edirik.\nNəzərinizə çatdırırıq ki, ödəniş edilmədiyi təqdirdə imtahanda iştirakınız mümkün olmayacaq."}
+];
+
+/* --- Persistence --- */
+function loadDB(){
+  try{
+    const raw=localStorage.getItem("kurs_db_v2");
+    if(raw)return JSON.parse(raw);
+  }catch(e){}
+  return null;
+}
+function saveDB(){
+  try{localStorage.setItem("kurs_db_v2",JSON.stringify(DB));}catch(e){}
+}
+let DB = loadDB();
+if(!DB){
+  DB = {
+    courses: JSON.parse(JSON.stringify(DEFAULT_COURSES)),
+    mixed: JSON.parse(JSON.stringify(DEFAULT_MIXED)),
+    custom: []
+  };
+}
+
+let currentTab="messages";
+let selectedCourse=null;
+let selectedBranch="elmler";
+let selectedMixed=null;
+let adminCatId=null;
+let editingItemId=null;
 
 /* --- Tab switching --- */
-function switchTab(tab) {
-  currentTab = tab;
-  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-  if (tab === "messages") {
+function switchTab(tab){
+  currentTab=tab;
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  if(tab==="messages"){
     document.getElementById("sectionMessages").classList.add("active");
     document.getElementById("tabMsg").classList.add("active");
-    document.getElementById("searchMessages").value = "";
-    renderCourseList("msgList", "messages", "");
-  } else {
+    renderCourseList("msgList","messages","");
+  }else if(tab==="exams"){
     document.getElementById("sectionExams").classList.add("active");
     document.getElementById("tabExam").classList.add("active");
-    document.getElementById("searchExams").value = "";
-    renderCourseList("examList", "exams", "");
+    renderCourseList("examList","exams","");
+  }else if(tab==="mixed"){
+    document.getElementById("sectionMixed").classList.add("active");
+    document.getElementById("tabMixed").classList.add("active");
+    renderMixedList("");
   }
 }
 
-/* --- Course list rendering --- */
-function renderCourseList(containerId, mode, query) {
-  const container = document.getElementById(containerId);
-  const q = query.toLowerCase().trim();
-  let filtered = COURSES;
-  if (q) {
-    filtered = COURSES.filter(c =>
-      c.name.toLowerCase().includes(q) ||
-      (c.abbr && c.abbr.toLowerCase().includes(q))
-    );
+/* --- Render course lists --- */
+function renderCourseList(containerId,mode,query){
+  const container=document.getElementById(containerId);
+  const q=query.toLowerCase().trim();
+  if(q==="1006"){openAdmin();return;}
+  let filtered=DB.courses;
+  if(q){filtered=DB.courses.filter(c=>c.name.toLowerCase().includes(q)||(c.abbr&&c.abbr.toLowerCase().includes(q)));}
+  if(filtered.length===0){
+    container.innerHTML='<div class="empty-state"><p>Nəticə tapılmadı</p></div>';return;
   }
-  if (filtered.length === 0) {
-    container.innerHTML = '<div class="empty-state"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg><p>Nəticə tapılmadı</p></div>';
-    return;
-  }
-  container.innerHTML = filtered.map(c => {
-    const sub = c.subtitle ? `<div class="course-sub">${c.subtitle}</div>` : "";
-    const badge = (c.dualBranch && mode === 'messages') ? '<span class="course-badge">2 filial</span>' : '';
-    return `<div class="course-item" onclick="selectCourse(${c.id},'${mode}')" tabindex="0" role="button" aria-label="${c.name}">
+  container.innerHTML=filtered.map(c=>{
+    const sub=c.subtitle?`<div class="course-sub">${c.subtitle}</div>`:"";
+    const badge=(c.dualBranch&&mode==="messages")?'<span class="course-badge">2 filial</span>':"";
+    return `<div class="course-item" onclick="selectCourse(${c.id},'${mode}')" tabindex="0">
       <div class="course-num">${c.id}</div>
+      <div class="course-info"><div class="course-name">${c.name}</div>${sub}${badge}</div>
+      <svg class="course-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>`;
+  }).join("");
+}
+
+/* --- Render mixed list --- */
+function renderMixedList(query){
+  const container=document.getElementById("mixedList");
+  const q=query.toLowerCase().trim();
+  if(q==="1006"){openAdmin();return;}
+  let filtered=DB.mixed;
+  if(q){filtered=DB.mixed.filter(m=>m.title.toLowerCase().includes(q)||m.content.toLowerCase().includes(q));}
+  if(filtered.length===0){
+    container.innerHTML='<div class="empty-state"><p>Nəticə tapılmadı</p></div>';return;
+  }
+  container.innerHTML=filtered.map((m,i)=>{
+    const preview=m.content.length>80?m.content.substring(0,80)+"…":m.content;
+    return `<div class="course-item" onclick="selectMixed(${i})" tabindex="0">
+      <div class="course-num">${i+1}</div>
       <div class="course-info">
-        <div class="course-name">${c.name}</div>
-        ${sub}${badge}
+        <div class="course-name">${m.title}</div>
+        <div class="course-sub">${preview}</div>
       </div>
-      <svg class="course-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      <svg class="course-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
     </div>`;
   }).join("");
 }
 
 /* --- Select course & open modal --- */
-function selectCourse(id, mode) {
-  selectedCourse = COURSES.find(c => c.id === id);
-  selectedBranch = "elmler";
-  isEditing = false;
-  editContent = "";
-  document.getElementById("modalTitle").textContent = selectedCourse.name;
+function selectCourse(id,mode){
+  selectedCourse=DB.courses.find(c=>c.id===id);
+  selectedBranch="elmler";
+  document.getElementById("modalTitle").textContent=selectedCourse.name;
   renderModalBody(mode);
+  openModal();
+}
+function selectMixed(index){
+  selectedMixed=DB.mixed[index];
+  document.getElementById("modalTitle").textContent=selectedMixed.title;
+  document.getElementById("modalBody").innerHTML=`<div class="msg-preview">${escapeHtml(selectedMixed.content)}</div>`;
+  openModal();
+}
+function openModal(){
   document.getElementById("modalOverlay").classList.add("open");
-  document.body.style.overflow = "hidden";
+  document.body.style.overflow="hidden";
+}
+function closeModal(){
+  document.getElementById("modalOverlay").classList.remove("open");
+  document.body.style.overflow="";
+  selectedCourse=null;selectedMixed=null;
 }
 
-/* --- Modal body rendering --- */
-function renderModalBody(mode) {
-  const c = selectedCourse;
-  const body = document.getElementById("modalBody");
-  const footer = document.getElementById("modalFooter");
-  if (!c) return;
-
-  let branchHtml = "";
-  if (c.dualBranch && mode === "messages") {
-    branchHtml = `<div class="branch-selector">
+/* --- Modal body for courses --- */
+function renderModalBody(mode){
+  const c=selectedCourse;const body=document.getElementById("modalBody");if(!c)return;
+  let branchHtml="";
+  if(c.dualBranch&&mode==="messages"){
+    branchHtml=`<div class="branch-selector">
       <button class="branch-btn ${selectedBranch==='elmler'?'active':''}" onclick="setBranch('elmler','${mode}')">Elmlər</button>
       <button class="branch-btn ${selectedBranch==='ramana'?'active':''}" onclick="setBranch('ramana','${mode}')">Ramana</button>
     </div>`;
   }
-
-  let inputsHtml = "";
-  if (mode === "messages") {
-    inputsHtml = `<div class="modal-inputs">
-      <div><label>Tarix</label><input type="text" id="msgDate" placeholder="21.08.2026" oninput="updatePreview('${mode}')"></div>
-    </div>`;
-  } else {
-    inputsHtml = `<div class="modal-inputs">
-      <div class="modal-input-row">
-        <div><label>Tarix</label><input type="text" id="examDate" placeholder="21.08.2026" oninput="updatePreview('${mode}')"></div>
-        <div><label>Saat</label><input type="text" id="examTime" placeholder="11:30" oninput="formatTime(this);updatePreview('${mode}')"></div>
-      </div>
-    </div>`;
+  let inputsHtml="";
+  if(mode==="messages"){
+    inputsHtml=`<div class="modal-inputs"><div><label>Tarix</label><input type="text" id="msgDate" placeholder="21.08.2026" oninput="updatePreview('${mode}')"></div></div>`;
+  }else{
+    inputsHtml=`<div class="modal-inputs"><div class="modal-input-row">
+      <div><label>Tarix</label><input type="text" id="examDate" placeholder="21.08.2026" oninput="updatePreview('${mode}')"></div>
+      <div><label>Saat</label><input type="text" id="examTime" placeholder="11:30" oninput="formatTime(this);updatePreview('${mode}')"></div>
+    </div></div>`;
   }
-
-  const previewContent = isEditing
-    ? `<textarea class="msg-edit-area" id="editArea" oninput="editContent=this.value">${escapeHtml(editContent)}</textarea>`
-    : `<div class="msg-preview" id="msgPreview">${escapeHtml(generateMessage(mode))}</div>`;
-
-  body.innerHTML = branchHtml + inputsHtml + previewContent;
-
-  const editBtn = document.getElementById("btnEdit");
-  editBtn.textContent = isEditing ? "HAZIRDIR" : "DÜZƏLİŞ ET";
+  body.innerHTML=branchHtml+inputsHtml+`<div class="msg-preview" id="msgPreview">${escapeHtml(generateMessage(mode))}</div>`;
 }
-
-/* --- Message generation --- */
-function generateMessage(mode) {
-  const c = selectedCourse;
-  const branch = BRANCHES[selectedBranch];
-  if (mode === "messages") {
-    const dateVal = document.getElementById("msgDate") ? document.getElementById("msgDate").value : "";
-    const date = dateVal || "öz_tarixim";
-    return `Salam,\n\n${c.name} saat 08:30-da ${date} tarixində ${branch.name} filialında başlayacaq.\n\n\u{1F4CD} Konum: ${branch.map}\n\nKursda iştirak edə biləcəksiniz?`;
-  } else {
-    const dateVal = document.getElementById("examDate") ? document.getElementById("examDate").value : "";
-    const timeVal = document.getElementById("examTime") ? document.getElementById("examTime").value : "";
-    const date = dateVal || "öz_tarixim";
-    const time = timeVal || "öz_saatım";
-    return `Salam,\n\nDövlət Dəniz və Liman Agentliyi tərəfindən ${c.name} kursunun imtahanı keçiriləcəkdir.\n\n\u{1F4C5} Tarix: ${date}\n\u23F0 Saat: ${time}\n\u{1F4CD} Yerləşdiyi ünvan: Dövlət Dəniz və Liman Agentliyi\n\u{1F517} Konum: https://maps.app.goo.gl/R7kzyvyqhdYipxW76\n\nQeyd: İmtahana gələrkən şəxsiyyət vəsiqənizin əslini və 2 ədəd kopyasını özünüzlə gətirməyiniz mütləqdir. Əks təqdirdə imtahana buraxılmayacaqsınız.`;
+function formatTime(input){let v=input.value.replace(/[^0-9]/g,"");if(v.length>2)v=v.substring(0,2)+":"+v.substring(2,4);input.value=v;}
+function generateMessage(mode){
+  const c=selectedCourse;const branch=BRANCHES[selectedBranch];
+  if(mode==="messages"){
+    const dv=document.getElementById("msgDate")?document.getElementById("msgDate").value:"";
+    const d=dv||"öz_tarixim";
+    return `Salam,\n\n${c.name} saat 08:30-da ${d} tarixində ${branch.name} filialında başlayacaq.\n\n\u{1F4CD} Konum: ${branch.map}\n\nKursda iştirak edə biləcəksiniz?`;
+  }else{
+    const dv=document.getElementById("examDate")?document.getElementById("examDate").value:"";
+    const tv=document.getElementById("examTime")?document.getElementById("examTime").value:"";
+    const d=dv||"öz_tarixim";const t=tv||"öz_saatım";
+    return `Salam,\n\nDövlət Dəniz və Liman Agentliyi tərəfindən ${c.name} kursunun imtahanı keçiriləcəkdir.\n\n\u{1F4C5} Tarix: ${d}\n\u23F0 Saat: ${t}\n\u{1F4CD} Yerləşdiyi ünvan: Dövlət Dəniz və Liman Agentliyi\n\u{1F517} Konum: https://maps.app.goo.gl/R7kzyvyqhdYipxW76\n\nQeyd: İmtahana gələrkən şəxsiyyət vəsiqənizin əslini və 2 ədəd kopyasını özünüzlə gətirməyiniz mütləqdir. Əks təqdirdə imtahana buraxılmayacaqsınız.`;
   }
 }
-
-function formatTime(input) {
-  let v = input.value.replace(/[^0-9]/g, "");
-  if (v.length > 2) v = v.substring(0, 2) + ":" + v.substring(2, 4);
-  input.value = v;
+function updatePreview(mode){
+  const p=document.getElementById("msgPreview");if(p)p.textContent=generateMessage(mode);
 }
-
-function updatePreview(mode) {
-  if (isEditing) return;
-  const preview = document.getElementById("msgPreview");
-  if (preview) preview.textContent = generateMessage(mode);
-}
-
-function setBranch(branch, mode) {
-  selectedBranch = branch;
-  renderModalBody(mode);
-}
-
-/* --- Edit toggle --- */
-function toggleEdit() {
-  isEditing = !isEditing;
-  if (isEditing) {
-    editContent = generateMessage(currentTab === "messages" ? "messages" : "exams");
-  } else {
-    editContent = "";
-  }
-  renderModalBody(currentTab === "messages" ? "messages" : "exams");
-}
-
-/* --- Close modal --- */
-function closeModal() {
-  document.getElementById("modalOverlay").classList.remove("open");
-  document.body.style.overflow = "";
-  selectedCourse = null;
-  isEditing = false;
-  editContent = "";
-}
+function setBranch(branch,mode){selectedBranch=branch;renderModalBody(mode);}
 
 /* --- Copy --- */
-function getMessage() {
-  if (isEditing) return editContent;
-  return generateMessage(currentTab === "messages" ? "messages" : "exams");
+function getCurrentText(){
+  if(selectedMixed)return selectedMixed.content;
+  return generateMessage(currentTab==="messages"?"messages":"exams");
 }
-
-function copyMessage() {
-  const text = getMessage();
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => showToast()).catch(() => fallbackCopy(text));
-  } else {
-    fallbackCopy(text);
-  }
+function copyMessage(){
+  const t=getCurrentText();
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(()=>showToast()).catch(()=>fallbackCopy(t));}
+  else fallbackCopy(t);
 }
-
-function fallbackCopy(text) {
-  const ta = document.createElement("textarea");
-  ta.value = text;
-  ta.style.position = "fixed";
-  ta.style.left = "-9999px";
-  document.body.appendChild(ta);
-  ta.select();
-  try { document.execCommand("copy"); showToast(); }
-  catch(e) { alert("Kopyalama uğursuz oldu."); }
+function fallbackCopy(text){
+  const ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.select();
+  try{document.execCommand("copy");showToast();}catch(e){alert("Kopyalama uğursuz.");}
   document.body.removeChild(ta);
 }
-
-/* --- Toast --- */
-function showToast() {
-  const t = document.getElementById("toast");
-  t.classList.add("show");
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove("show"), 2500);
-}
+function showToast(){const t=document.getElementById("toast");t.classList.add("show");clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.remove("show"),2500);}
 
 /* --- Helpers --- */
-function escapeHtml(str) {
-  return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-}
-
-/* --- Keyboard shortcuts --- */
-document.addEventListener("keydown", function(e) {
-  /* ESC closes modal */
-  if (e.key === "Escape") {
-    const overlay = document.getElementById("modalOverlay");
-    if (overlay.classList.contains("open")) {
-      closeModal();
-      e.preventDefault();
-    }
-  }
-  /* Ctrl+Space toggles tab */
-  if (e.ctrlKey && e.code === "Space") {
-    e.preventDefault();
-    switchTab(currentTab === "messages" ? "exams" : "messages");
-  }
-});
+function escapeHtml(str){return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function genId(){return Date.now().toString(36)+Math.random().toString(36).substr(2,5);}
 
 /* --- Search handlers --- */
-document.getElementById("searchMessages").addEventListener("input", function() {
-  renderCourseList("msgList", "messages", this.value);
-});
-document.getElementById("searchExams").addEventListener("input", function() {
-  renderCourseList("examList", "exams", this.value);
+document.getElementById("searchMessages").addEventListener("input",function(){renderCourseList("msgList","messages",this.value);});
+document.getElementById("searchExams").addEventListener("input",function(){renderCourseList("examList","exams",this.value);});
+
+/* ==================== ADMIN PANEL ==================== */
+function openAdmin(){
+  closeModal();
+  document.getElementById("adminPanel").classList.add("open");
+  showAdminMain();
+}
+function closeAdmin(){
+  document.getElementById("adminPanel").classList.remove("open");
+  switchTab(currentTab);
+}
+function showAdminMain(){
+  document.querySelectorAll(".admin-sub-view").forEach(v=>v.classList.remove("active"));
+  document.getElementById("adminMainView").classList.add("active");
+  renderAdminCategories();
+}
+function showAdminDetail(){
+  document.querySelectorAll(".admin-sub-view").forEach(v=>v.classList.remove("active"));
+  document.getElementById("adminDetailView").classList.add("active");
+  renderAdminDetail();
+}
+function showAdminForm(){
+  document.querySelectorAll(".admin-sub-view").forEach(v=>v.classList.remove("active"));
+  document.getElementById("adminFormView").classList.add("active");
+}
+
+function getCategories(){
+  return [
+    {id:"courses",name:"Kurslar (Mesajlar)",count:DB.courses.length},
+    {id:"exams",name:"İmtahanlar",count:DB.courses.length},
+    {id:"mixed",name:"Qarışıq Mesajlar",count:DB.mixed.length},
+    ...DB.custom.map(c=>({id:c.id,name:c.name,count:c.items.length}))
+  ];
+}
+
+function renderAdminCategories(){
+  const cats=getCategories();
+  document.getElementById("adminCategories").innerHTML=cats.map(cat=>`
+    <div class="admin-cat-item" onclick="openCategory('${cat.id}')">
+      <span class="admin-cat-name">${cat.name}</span>
+      <span class="admin-cat-count">${cat.count} mesaj</span>
+    </div>`).join("")+
+    `<button class="admin-add-btn" onclick="addCustomCategory()">+ Yeni başlıq əlavə et</button>`;
+}
+
+function openCategory(id){
+  adminCatId=id;editingItemId=null;
+  const cat=getCategories().find(c=>c.id===id);
+  document.getElementById("adminDetailTitle").textContent=cat.name;
+  showAdminDetail();
+}
+
+function renderAdminDetail(){
+  let items=[];
+  if(adminCatId==="mixed")items=DB.mixed.map(m=>({id:m.id,title:m.title,content:m.content}));
+  else if(adminCatId.startsWith("custom_")){
+    const cat=DB.custom.find(c=>c.id===adminCatId);
+    if(cat)items=cat.items.map(i=>({...i}));
+  }
+  document.getElementById("adminMsgItems").innerHTML=items.length===0?'<div class="empty-state"><p>Hələ mesaj yoxdur</p></div>':items.map(item=>`
+    <div class="admin-msg-item">
+      <div class="admin-msg-content">
+        <div class="admin-msg-title">${item.title}</div>
+        <div class="admin-msg-preview">${item.content}</div>
+      </div>
+      <div class="admin-actions">
+        <button class="admin-action-btn" onclick="editItem('${item.id}')" title="Redaktə"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+        <button class="admin-action-btn danger" onclick="deleteItem('${item.id}')" title="Sil"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+      </div>
+    </div>`).join("");
+}
+
+function openItemForm(itemId){
+  editingItemId=itemId;
+  const formTitle=document.getElementById("adminFormTitle");
+  const inpT=document.getElementById("formItemTitle");
+  const inpC=document.getElementById("formItemContent");
+  if(itemId){
+    formTitle.textContent="Redaktə et";
+    let item=null;
+    if(adminCatId==="mixed")item=DB.mixed.find(m=>m.id===itemId);
+    else if(adminCatId.startsWith("custom_")){
+      const cat=DB.custom.find(c=>c.id===adminCatId);
+      if(cat)item=cat.items.find(i=>i.id===itemId);
+    }
+    if(item){inpT.value=item.title;inpC.value=item.content;}
+  }else{
+    formTitle.textContent="Yeni mesaj";
+    inpT.value="";inpC.value="";
+  }
+  showAdminForm();
+}
+function editItem(id){openItemForm(id);}
+
+function deleteItem(id){
+  if(!confirm("Silmək istədiyinizə əminsiniz?"))return;
+  if(adminCatId==="mixed"){
+    DB.mixed=DB.mixed.filter(m=>m.id!==id);
+  }else if(adminCatId.startsWith("custom_")){
+    const cat=DB.custom.find(c=>c.id===adminCatId);
+    if(cat)cat.items=cat.items.filter(i=>i.id!==id);
+  }
+  saveDB();renderAdminDetail();renderMixedList("");
+}
+
+function saveItem(){
+  const title=document.getElementById("formItemTitle").value.trim();
+  const content=document.getElementById("formItemContent").value.trim();
+  if(!title||!content){alert("Başlıq və mətn boş ola bilməz.");return;}
+  if(editingItemId){
+    if(adminCatId==="mixed"){
+      const item=DB.mixed.find(m=>m.id===editingItemId);
+      if(item){item.title=title;item.content=content;}
+    }else if(adminCatId.startsWith("custom_")){
+      const cat=DB.custom.find(c=>c.id===adminCatId);
+      if(cat){
+        const item=cat.items.find(i=>i.id===editingItemId);
+        if(item){item.title=title;item.content=content;}
+      }
+    }
+  }else{
+    const newItem={id:genId(),title,content};
+    if(adminCatId==="mixed")DB.mixed.push(newItem);
+    else if(adminCatId.startsWith("custom_")){
+      const cat=DB.custom.find(c=>c.id===adminCatId);
+      if(cat)cat.items.push(newItem);
+    }
+  }
+  saveDB();showAdminDetail();
+}
+
+function addCustomCategory(){
+  const name=prompt("Yeni başlığın adını yazın:");
+  if(!name||!name.trim())return;
+  const cat={id:"custom_"+genId(),name:name.trim(),items:[]};
+  DB.custom.push(cat);saveDB();renderAdminCategories();
+}
+
+/* --- Keyboard --- */
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    const mo=document.getElementById("modalOverlay");
+    if(mo.classList.contains("open")){closeModal();e.preventDefault();}
+    else if(document.getElementById("adminPanel").classList.contains("open")){closeAdmin();e.preventDefault();}
+  }
+  if(e.ctrlKey&&e.code==="Space"){e.preventDefault();const tabs=["messages","exams","mixed"];const idx=tabs.indexOf(currentTab);switchTab(tabs[(idx+1)%tabs.length]);}
 });
 
 /* --- Init --- */
-renderCourseList("msgList", "messages", "");
-renderCourseList("examList", "exams", "");
+renderCourseList("msgList","messages","");
+renderCourseList("examList","exams","");
+renderMixedList("");
 </script>
 </body>
 </html>
