@@ -537,13 +537,19 @@ function openItemForm(itemId){
   const inpC=document.getElementById("formItemContent");
   if(itemId){
     formTitle.textContent="Redaktə et";
-    let item=null;
-    if(adminCatId==="mixed")item=DB.mixed.find(m=>m.id===itemId);
-    else if(adminCatId.startsWith("custom_")){
+    if(adminCatId==="courses"||adminCatId==="exams"){
+      const c=DB.courses.find(x=>String(x.id)===itemId);
+      if(c){inpT.value=c.name;inpC.value=c.abbr||"";}
+    }else if(adminCatId==="mixed"){
+      const item=DB.mixed.find(m=>m.id===itemId);
+      if(item){inpT.value=item.title;inpC.value=item.content;}
+    }else if(adminCatId.startsWith("custom_")){
       const cat=DB.custom.find(c=>c.id===adminCatId);
-      if(cat)item=cat.items.find(i=>i.id===itemId);
+      if(cat){
+        const item=cat.items.find(i=>i.id===itemId);
+        if(item){inpT.value=item.title;inpC.value=item.content;}
+      }
     }
-    if(item){inpT.value=item.title;inpC.value=item.content;}
   }else{
     formTitle.textContent="Yeni mesaj";
     inpT.value="";inpC.value="";
@@ -566,6 +572,12 @@ function deleteItem(id){
 function saveItem(){
   const title=document.getElementById("formItemTitle").value.trim();
   const content=document.getElementById("formItemContent").value.trim();
+  if(adminCatId==="courses"||adminCatId==="exams"){
+    if(!title){alert("Ad boş ola bilməz.");return;}
+    const c=DB.courses.find(x=>String(x.id)===String(editingItemId));
+    if(c){c.name=title;c.abbr=content||null;saveDB();showAdminDetail();}
+    return;
+  }
   if(!title||!content){alert("Başlıq və mətn boş ola bilməz.");return;}
   if(editingItemId){
     if(adminCatId==="mixed"){
