@@ -546,19 +546,6 @@ function renderAdminDetail(){
       </div>
     </div>`).join("");
 }
-  document.getElementById("adminMsgItems").innerHTML=items.length===0?'<div class="empty-state"><p>Hələ mesaj yoxdur</p></div>':items.map(item=>`
-    <div class="admin-msg-item">
-      <div class="admin-msg-content">
-        <div class="admin-msg-title">${item.title}</div>
-        <div class="admin-msg-preview">${item.content}</div>
-      </div>
-      <div class="admin-actions">
-        <button class="admin-action-btn" onclick="editItem('${item.id}')" title="Redaktə"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
-        <button class="admin-action-btn danger" onclick="deleteItem('${item.id}')" title="Sil"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-      </div>
-    </div>`).join("");
-}
-
 function openItemForm(itemId){
   editingItemId=itemId;
   const formTitle=document.getElementById("adminFormTitle");
